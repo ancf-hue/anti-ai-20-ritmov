@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Анти ИИ 20 ритмов</title> <!-- ← ИЗМЕНЕНО -->
+    <title>Анти ИИ 20 ритмов</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         /* === БАЗОВЫЕ СТИЛИ === */
@@ -26,7 +26,7 @@
         }
 
         body.light-theme {
-            background: #f5f5f5;
+            background: #e0e0e8;
         }
 
         .screen {
@@ -43,7 +43,7 @@
         }
 
         body.light-theme .screen {
-            background: #f5f5f5;
+            background: #e0e0e8;
         }
 
         .page {
@@ -59,7 +59,7 @@
         }
 
         body.light-theme .page {
-            background: #f5f5f5;
+            background: #e0e0e8;
         }
 
         .page.active {
@@ -75,17 +75,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
             padding: 6px 16px;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             pointer-events: none;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         body.light-theme .logo-bar {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
         .logo-icon {
             width: 22px;
@@ -95,9 +97,10 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; }
-        body.light-theme .logo-text { color: #000; }
+        .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        body.light-theme .logo-text { color: #000; text-shadow: none; }
 
+        /* СТЕКЛЯННАЯ КНОПКА НАЗАД */
         .back-btn {
             position: sticky;
             top: 16px;
@@ -106,9 +109,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
             font-size: 20px;
             cursor: pointer;
@@ -116,13 +119,16 @@
             align-items: center;
             justify-content: center;
             margin: 16px 0 0 16px;
-            transition: 0.1s, background 0.3s;
+            transition: all 0.1s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         body.light-theme .back-btn {
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.15);
             color: #000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
-        .back-btn:active { transform: scale(0.95); }
+        .back-btn:active { transform: scale(0.92); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); }
 
         /* === СКРЫТИЕ СКРОЛЛБАРОВ === */
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -149,15 +155,16 @@
             display: block;
         }
         
+        /* СТЕКЛЯННАЯ КНОПКА ЗВУКА */
         .sound-btn {
             position: absolute;
             top: 18px;
             left: 18px;
             z-index: 30;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             padding: 12px 26px;
             cursor: pointer;
             display: flex;
@@ -166,10 +173,24 @@
             font-weight: bold;
             font-size: 1.4rem;
             color: white;
-            transition: 0.1s ease;
+            transition: all 0.1s ease;
             font-family: system-ui;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
         }
-        .sound-btn:active { transform: scale(0.96); }
+        .sound-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.4s ease;
+        }
+        .sound-btn:hover::before { left: 100%; }
+        .sound-btn:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
         .sound-btn .ico { font-size: 1.9rem; }
         .sound-btn .txt { font-size: 1.25rem; }
         @media (max-width: 480px) {
@@ -188,25 +209,30 @@
             overflow-y: auto;
         }
         
+        /* СТЕКЛЯННЫЙ БЛОК ПОДДЕРЖКИ */
         .support-block {
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(16px);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 25px;
-            border: 1px solid rgba(39, 174, 96, 0.3);
-            transition: background 0.3s ease;
+            border: 1px solid rgba(39, 174, 96, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         body.light-theme .support-block {
-            background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
-            border: 1px solid #27ae60;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(39, 174, 96, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
         .support-block h3 {
             color: #f1c40f;
             font-size: 1.3rem;
             text-align: center;
             margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.3);
         }
-        body.light-theme .support-block h3 { color: #e67e22; }
+        body.light-theme .support-block h3 { color: #e67e22; text-shadow: none; }
         .free-badge {
             text-align: center;
             color: #27ae60;
@@ -221,8 +247,11 @@
             margin-bottom: 20px;
         }
         body.light-theme .support-text { color: #555; }
+        
+        /* СТЕКЛЯННАЯ СТРОКА ТЕЛЕФОНА */
         .phone-row {
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(8px);
             padding: 14px;
             border-radius: 60px;
             display: flex;
@@ -230,24 +259,31 @@
             justify-content: space-between;
             margin: 15px 0;
             border: 1px solid #27ae60;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        body.light-theme .phone-row { background: #f0f0f0; }
+        body.light-theme .phone-row { background: rgba(240, 240, 240, 0.8); }
         .phone-row span {
             font-size: 1.1rem;
             font-weight: bold;
             letter-spacing: 1px;
             color: #27ae60;
         }
+        
+        /* СТЕКЛЯННАЯ КНОПКА КОПИРОВАТЬ */
         .copy-phone-btn {
-            background: #27ae60;
-            border: none;
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.3), rgba(30, 142, 80, 0.2));
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(39, 174, 96, 0.6);
             padding: 8px 20px;
             border-radius: 40px;
-            color: white;
+            color: #27ae60;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-        .copy-phone-btn:active { transform: scale(0.95); }
+        .copy-phone-btn:active { transform: scale(0.95); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2); }
+        
         .support-note {
             font-size: 0.75rem;
             color: #888;
@@ -271,41 +307,65 @@
         }
         body.light-theme .other-projects-title { color: #000; }
         
+        /* СТЕКЛЯННЫЕ ПУНКТЫ ПРОЕКТОВ */
         .proj-item {
             padding: 14px;
-            background: #111;
-            border: 1px solid #333;
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(51, 51, 68, 0.5);
             border-radius: 14px;
             margin-bottom: 12px;
             cursor: pointer;
             color: #fff;
             font-weight: 600;
-            transition: 0.1s;
+            transition: all 0.1s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 6px rgba(0, 0, 0, 0.2);
         }
         body.light-theme .proj-item {
-            background: #fff;
-            border: 1px solid #ddd;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             color: #000;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.05);
         }
         .proj-item:active {
-            background: #27ae60;
+            background: rgba(39, 174, 96, 0.3);
             border-color: #27ae60;
-            color: #000;
+            color: #27ae60;
             transform: scale(0.98);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
         }
+        
+        /* СТЕКЛЯННАЯ 3D КНОПКА ОТКРЫТЬ */
         .btn-metronom {
             width: 100%;
             padding: 14px;
-            background: #27ae60;
-            color: white;
-            border: none;
+            background: rgba(39, 174, 96, 0.25);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(39, 174, 96, 0.6);
             border-radius: 40px;
             font-size: 1rem;
             font-weight: bold;
+            color: #27ae60;
             cursor: pointer;
             margin-top: 30px;
+            transition: all 0.1s ease;
+            text-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-metronom:active { transform: scale(0.97); }
+        .btn-metronom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.4s ease;
+        }
+        .btn-metronom:hover::before { left: 100%; }
+        .btn-metronom:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
 
         /* СТРАНИЦА 3: МЕТРОНОМ / 20 РИТМОВ */
         :root {
@@ -324,15 +384,14 @@
             overflow-y: hidden;
             opacity: 0;
             transition: opacity 0.5s ease, background 0.3s ease;
-        }
-        body:not(.light-theme) .app {
-            background: #121212;
+            background: radial-gradient(circle at 20% 30%, #0a0a12, #030308);
         }
         body.light-theme .app {
-            background: #f5f5f5;
+            background: radial-gradient(circle at 20% 30%, #e8e8f0, #d0d0dc);
         }
         .app.visible { opacity: 1; }
         
+        /* СТЕКЛЯННЫЙ ХЕДЕР */
         .header {
             width: 100%;
             padding: 15px 20px;
@@ -341,54 +400,48 @@
             position: sticky;
             top: 0;
             z-index: 10;
-            transition: background 0.3s ease;
+            background: rgba(30, 30, 40, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(39, 174, 96, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        body:not(.light-theme) .header { background: #1e1e1e; }
-        body.light-theme .header { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        body.light-theme .header {
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
         
         .header-title {
             font-weight: bold;
             font-size: 1rem;
+            background: linear-gradient(135deg, #fff, #27ae60);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        body:not(.light-theme) .header-title { color: #e0e0e0; }
-        body.light-theme .header-title { color: #000; }
+        body.light-theme .header-title {
+            background: linear-gradient(135deg, #000, #1e8e50);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
         
-        .lang-switch {
+        /* СТЕКЛЯННЫЕ КНОПКИ ПЕРЕКЛЮЧАТЕЛИ */
+        .lang-switch, .theme-switch {
             cursor: pointer;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
-            transition: 0.1s;
-            background: #2a2a2a;
-            color: #27ae60;
-            border: 1px solid #27ae60;
+            transition: all 0.1s ease;
+            background: rgba(42, 42, 58, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(39, 174, 96, 0.5);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-        body.light-theme .lang-switch {
-            background: #e0e0e0;
-            color: #1e8e50;
-            border: 1px solid #27ae60;
+        body.light-theme .lang-switch, body.light-theme .theme-switch {
+            background: rgba(224, 224, 240, 0.7);
+            border: 1px solid rgba(39, 174, 96, 0.4);
         }
-        .lang-switch:active { transform: scale(0.95); }
-        
-        .theme-switch {
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: 0.1s;
-            background: #2a2a2a;
-            color: #f1c40f;
-            border: 1px solid #f1c40f;
-            margin-right: 8px;
-        }
-        body.light-theme .theme-switch {
-            background: #e0e0e0;
-            color: #e67e22;
-            border: 1px solid #e67e22;
-        }
-        .theme-switch:active { transform: scale(0.95); }
+        .lang-switch:active, .theme-switch:active { transform: scale(0.95); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2); }
         
         .stats-grid {
             display: grid;
@@ -398,104 +451,158 @@
             width: 100%;
             max-width: 400px;
         }
+        
+        /* СТЕКЛЯННЫЕ КАРТОЧКИ СТАТИСТИКИ */
         .stat-card {
             padding: 15px;
-            border-radius: 16px;
+            border-radius: 24px;
             text-align: center;
-            border-bottom: 4px solid var(--primary);
-            transition: background 0.3s ease;
+            border-bottom: 3px solid var(--primary);
+            background: rgba(30, 30, 40, 0.5);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
-        body:not(.light-theme) .stat-card { background: #1e1e1e; }
-        body.light-theme .stat-card { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.light-theme .stat-card {
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
         
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-        body:not(.light-theme) .stat-label { color: #888; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #a0a0b0; }
         body.light-theme .stat-label { color: #666; }
         
-        .stat-val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--primary); }
+        .stat-val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--primary); text-shadow: 0 0 8px rgba(39, 174, 96, 0.4); }
         .best-val { font-size: 0.7rem; color: var(--gold); margin-top: 5px; display: block; }
         
-        .track-container { width: 85%; height: 6px; border-radius: 3px; position: relative; margin: 10px 0; overflow: hidden; }
-        body:not(.light-theme) .track-container { background: #2a2a2a; }
-        body.light-theme .track-container { background: #ddd; }
+        /* СТЕКЛЯННЫЙ ТРЕК */
+        .track-container {
+            width: 85%;
+            height: 6px;
+            border-radius: 3px;
+            position: relative;
+            margin: 10px 0;
+            overflow: hidden;
+            background: rgba(42, 42, 58, 0.6);
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3);
+        }
+        body.light-theme .track-container { background: rgba(200, 200, 210, 0.7); }
         
-        #cursor { width: 8px; height: 100%; background: var(--primary); position: absolute; left: 0; border-radius: 3px; transition: left 0.02s linear; }
+        #cursor { width: 8px; height: 100%; background: var(--primary); position: absolute; left: 0; border-radius: 3px; box-shadow: 0 0 6px var(--primary); transition: left 0.02s linear; }
         
+        /* СТЕКЛЯННЫЙ БАРАБАН */
         #drum-pad {
             width: 240px;
             height: 240px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, #4a4a4a, #111);
-            border: 8px solid #2a2a2a;
+            background: radial-gradient(circle at 35% 35%, rgba(74, 74, 90, 0.8), rgba(17, 17, 34, 0.9));
+            backdrop-filter: blur(4px);
+            border: 3px solid rgba(39, 174, 96, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 20px auto;
             cursor: pointer;
-            transition: transform 0.04s, border-color 0.1s;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: transform 0.05s cubic-bezier(0.2, 0.9, 0.4, 1.1), border-color 0.1s;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         }
         body.light-theme #drum-pad {
-            background: radial-gradient(circle at 35% 35%, #ccc, #999);
-            border: 8px solid #ddd;
+            background: radial-gradient(circle at 35% 35%, rgba(200, 200, 210, 0.8), rgba(170, 170, 180, 0.9));
         }
-        #drum-pad.active { transform: scale(0.94); border-color: var(--primary); box-shadow: 0 0 30px var(--primary); }
-        #drum-pad b { font-size: 1.5rem; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        #drum-pad.active { transform: scale(0.94); border-color: var(--primary); box-shadow: 0 0 30px var(--primary), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+        #drum-pad b { font-size: 1.5rem; color: white; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
         
+        /* СТЕКЛЯННЫЕ КОНТРОЛЛЫ */
         .controls { 
             width: 100%; 
             max-width: 400px; 
             padding: 20px 20px 60px;
         }
         .control-group { margin-bottom: 15px; }
-        .control-group label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
-        body:not(.light-theme) .control-group label { color: #888; }
-        body.light-theme .control-group label { color: #666; }
+        .control-group label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; color: #b0b0c0; }
+        body.light-theme .control-group label { color: #555; }
         
-        input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; border-radius: 2px; outline: none; }
-        body:not(.light-theme) input[type="range"] { background: #2a2a2a; }
-        body.light-theme input[type="range"] { background: #ddd; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; }
+        input[type="range"] { 
+            width: 100%; 
+            height: 5px; 
+            -webkit-appearance: none; 
+            border-radius: 5px; 
+            outline: none; 
+            background: rgba(42, 42, 58, 0.6);
+            backdrop-filter: blur(4px);
+        }
+        body.light-theme input[type="range"] { background: rgba(200, 200, 210, 0.7); }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px var(--primary); border: none; }
         
+        /* СТЕКЛЯННЫЙ ВЫПАДАЮЩИЙ СПИСОК */
         select {
             width: 100%;
             padding: 12px;
-            border: 1px solid #2a2a2a;
-            border-radius: 10px;
+            background: rgba(30, 30, 40, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(39, 174, 96, 0.4);
+            border-radius: 60px;
             cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: all 0.3s ease;
+            color: #e0e0e0;
+            font-weight: 500;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        body:not(.light-theme) select { background: #1e1e1e; color: #e0e0e0; border-color: #2a2a2a; }
-        body.light-theme select { background: #fff; color: #000; border-color: #ddd; }
+        body.light-theme select {
+            background: rgba(255, 255, 255, 0.7);
+            color: #000;
+            border-color: #27ae60;
+        }
         
+        /* СТЕКЛЯННАЯ 3D КНОПКА СТАРТ/СТОП */
         .btn-main {
             width: 100%;
             padding: 14px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 40px;
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.3), rgba(30, 142, 80, 0.2));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(39, 174, 96, 0.6);
+            border-radius: 60px;
             font-size: 1rem;
             font-weight: bold;
+            color: #27ae60;
             cursor: pointer;
             margin-top: 25px;
-            transition: transform 0.05s, background 0.2s;
+            transition: all 0.1s ease;
+            text-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-main:active { transform: scale(0.97); }
-        .btn-main.stop { background: var(--error); }
+        .btn-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.4s ease;
+        }
+        .btn-main:hover::before { left: 100%; }
+        .btn-main:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+        .btn-main.stop { 
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(200, 50, 40, 0.2));
+            border-color: rgba(231, 76, 60, 0.6);
+            color: #e74c3c;
+        }
         
         .msg { height: 30px; font-size: 1rem; font-weight: bold; text-align: center; margin: 10px 0; }
-        .perfect { color: var(--gold); text-shadow: 0 0 5px var(--gold); }
-        .good { color: #2ecc71; }
-        .hit { color: #3498db; }
-        .miss { color: var(--error); }
+        .perfect { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
+        .good { color: #2ecc71; text-shadow: 0 0 4px #2ecc71; }
+        .hit { color: #3498db; text-shadow: 0 0 4px #3498db; }
+        .miss { color: var(--error); text-shadow: 0 0 4px var(--error); }
     </style>
 </head>
 <body>
 <div class="screen">
     <div class="logo-bar" id="logo" style="display: none;">
         <div class="logo-icon"></div>
-        <span class="logo-text">Анти ИИ 20 ритмов</span> <!-- ← ИЗМЕНЕНО -->
+        <span class="logo-text">Анти ИИ 20 ритмов</span>
     </div>
 
     <!-- СТРАНИЦА 1: ЗАСТАВКА -->
@@ -534,7 +641,7 @@
             <div class="proj-item" onclick="openLink('https://anti-ai-passwords.vercel.app/')">🔐 Анти ИИ Пароли</div>
             <div class="proj-item" onclick="openLink('https://anti-ai-memory.vercel.app/')">🧠 Анти ИИ Память</div>
             <div class="proj-item" onclick="openLink('https://rutube.ru/channel/24404224/')">✨ ВолшебствО</div>
-            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ 20 РИТМОВ</button> <!-- ← ИЗМЕНЕНО -->
+            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ 20 РИТМОВ</button>
         </div>
     </div>
 
@@ -919,7 +1026,7 @@
     }, { once: true });
     
     if ('serviceWorker' in navigator) {
-        const swCode = `const CACHE_NAME = 'drum-v3'; self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
+        const swCode = `const CACHE_NAME = 'drum-v4'; self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
         const blob = new Blob([swCode], { type: 'text/javascript' });
         navigator.serviceWorker.register(URL.createObjectURL(blob));
     }
