@@ -26,7 +26,7 @@
         }
 
         body.light-theme {
-            background: #e0e0e8;
+            background: #f5f5f5;
         }
 
         .screen {
@@ -43,7 +43,7 @@
         }
 
         body.light-theme .screen {
-            background: #e0e0e8;
+            background: #f5f5f5;
         }
 
         .page {
@@ -54,18 +54,26 @@
             height: 100%;
             display: none;
             background: #000;
-            overflow-y: hidden;
+            overflow-y: auto;
             transition: background 0.3s ease;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .page::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            background: transparent;
         }
 
         body.light-theme .page {
-            background: #e0e0e8;
+            background: #f5f5f5;
         }
 
         .page.active {
             display: block;
         }
 
+        /* === ЛОГОТИП === */
         .logo-bar {
             position: absolute;
             top: 12px;
@@ -75,19 +83,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             padding: 6px 16px;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             pointer-events: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
         }
         body.light-theme .logo-bar {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
         .logo-icon {
             width: 22px;
@@ -97,10 +103,10 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        body.light-theme .logo-text { color: #000; text-shadow: none; }
+        .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; }
+        body.light-theme .logo-text { color: #000; }
 
-        /* СТЕКЛЯННАЯ КНОПКА НАЗАД */
+        /* === КНОПКА НАЗАД === */
         .back-btn {
             position: sticky;
             top: 16px;
@@ -109,9 +115,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: none;
             color: #fff;
             font-size: 20px;
             cursor: pointer;
@@ -119,25 +125,15 @@
             align-items: center;
             justify-content: center;
             margin: 16px 0 0 16px;
-            transition: all 0.1s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: 0.1s, background 0.3s;
         }
         body.light-theme .back-btn {
-            background: rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.15);
             color: #000;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5);
         }
-        .back-btn:active { transform: scale(0.92); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); }
+        .back-btn:active { transform: scale(0.95); }
 
-        /* === СКРЫТИЕ СКРОЛЛБАРОВ === */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* СТРАНИЦА 1: ЗАСТАВКА */
+        /* ========= СТРАНИЦА 1: ЗАСТАВКА ========= */
         .layers {
             position: absolute;
             top: 0;
@@ -155,16 +151,15 @@
             display: block;
         }
         
-        /* СТЕКЛЯННАЯ КНОПКА ЗВУКА */
         .sound-btn {
             position: absolute;
             top: 18px;
             left: 18px;
             z-index: 30;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(16px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             padding: 12px 26px;
             cursor: pointer;
             display: flex;
@@ -173,24 +168,10 @@
             font-weight: bold;
             font-size: 1.4rem;
             color: white;
-            transition: all 0.1s ease;
+            transition: 0.1s ease;
             font-family: system-ui;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            position: relative;
-            overflow: hidden;
         }
-        .sound-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.4s ease;
-        }
-        .sound-btn:hover::before { left: 100%; }
-        .sound-btn:active { transform: scale(0.96); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+        .sound-btn:active { transform: scale(0.96); }
         .sound-btn .ico { font-size: 1.9rem; }
         .sound-btn .txt { font-size: 1.25rem; }
         @media (max-width: 480px) {
@@ -199,40 +180,37 @@
             .sound-btn .txt { font-size: 1.1rem; }
         }
 
-        /* СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА */
+        /* ========= СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА ========= */
         .proj-list {
             padding: 20px 16px 80px;
             height: 100%;
-            overflow-y: hidden;
-        }
-        .proj-list.no-scrollbar {
             overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .proj-list::-webkit-scrollbar {
+            display: none;
         }
         
-        /* СТЕКЛЯННЫЙ БЛОК ПОДДЕРЖКИ */
         .support-block {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(16px);
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 25px;
-            border: 1px solid rgba(39, 174, 96, 0.4);
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+            transition: background 0.3s ease;
         }
         body.light-theme .support-block {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(39, 174, 96, 0.5);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
+            border: 1px solid #27ae60;
         }
         .support-block h3 {
             color: #f1c40f;
             font-size: 1.3rem;
             text-align: center;
             margin-bottom: 10px;
-            text-shadow: 0 0 5px rgba(241, 196, 15, 0.3);
         }
-        body.light-theme .support-block h3 { color: #e67e22; text-shadow: none; }
+        body.light-theme .support-block h3 { color: #e67e22; }
         .free-badge {
             text-align: center;
             color: #27ae60;
@@ -247,11 +225,8 @@
             margin-bottom: 20px;
         }
         body.light-theme .support-text { color: #555; }
-        
-        /* СТЕКЛЯННАЯ СТРОКА ТЕЛЕФОНА */
         .phone-row {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(8px);
+            background: #0a0a0a;
             padding: 14px;
             border-radius: 60px;
             display: flex;
@@ -259,31 +234,24 @@
             justify-content: space-between;
             margin: 15px 0;
             border: 1px solid #27ae60;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        body.light-theme .phone-row { background: rgba(240, 240, 240, 0.8); }
+        body.light-theme .phone-row { background: #f0f0f0; }
         .phone-row span {
             font-size: 1.1rem;
             font-weight: bold;
             letter-spacing: 1px;
             color: #27ae60;
         }
-        
-        /* СТЕКЛЯННАЯ КНОПКА КОПИРОВАТЬ */
         .copy-phone-btn {
-            background: linear-gradient(135deg, rgba(39, 174, 96, 0.3), rgba(30, 142, 80, 0.2));
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(39, 174, 96, 0.6);
+            background: #27ae60;
+            border: none;
             padding: 8px 20px;
             border-radius: 40px;
-            color: #27ae60;
+            color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.1s ease;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 6px rgba(0, 0, 0, 0.2);
         }
-        .copy-phone-btn:active { transform: scale(0.95); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2); }
-        
+        .copy-phone-btn:active { transform: scale(0.95); }
         .support-note {
             font-size: 0.75rem;
             color: #888;
@@ -307,40 +275,54 @@
         }
         body.light-theme .other-projects-title { color: #000; }
         
-        /* СТЕКЛЯННЫЕ ПУНКТЫ ПРОЕКТОВ */
+        /* СТЕКЛЯННЫЕ КАРТОЧКИ ПРОЕКТОВ */
         .proj-item {
             padding: 14px;
             background: rgba(17, 17, 17, 0.7);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(51, 51, 68, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(39, 174, 96, 0.3);
             border-radius: 14px;
             margin-bottom: 12px;
             cursor: pointer;
             color: #fff;
             font-weight: 600;
             transition: all 0.1s ease;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .proj-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.4s ease;
+        }
+        .proj-item:hover::before {
+            left: 100%;
         }
         body.light-theme .proj-item {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #27ae60;
             color: #000;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
         .proj-item:active {
-            background: rgba(39, 174, 96, 0.3);
+            background: #27ae60;
             border-color: #27ae60;
-            color: #27ae60;
+            color: #000;
             transform: scale(0.98);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 3px rgba(0, 0, 0, 0.2);
         }
         
-        /* СТЕКЛЯННАЯ 3D КНОПКА ОТКРЫТЬ */
-        .btn-metronom {
+        /* СТЕКЛЯННАЯ КНОПКА ОТКРЫТЬ (без слова Метроном) */
+        .btn-open {
             width: 100%;
             padding: 14px;
-            background: rgba(39, 174, 96, 0.25);
-            backdrop-filter: blur(16px);
+            background: rgba(39, 174, 96, 0.2);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(39, 174, 96, 0.6);
             border-radius: 40px;
             font-size: 1rem;
@@ -349,231 +331,304 @@
             cursor: pointer;
             margin-top: 30px;
             transition: all 0.1s ease;
-            text-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 5px rgba(39, 174, 96, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
-        .btn-metronom::before {
+        .btn-open::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.4s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
         }
-        .btn-metronom:hover::before { left: 100%; }
-        .btn-metronom:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+        .btn-open:hover::before {
+            left: 100%;
+        }
+        body.light-theme .btn-open {
+            background: rgba(39, 174, 96, 0.15);
+            color: #1e8e50;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        .btn-open:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
 
-        /* СТРАНИЦА 3: МЕТРОНОМ / 20 РИТМОВ */
-        :root {
-            --primary: #27ae60;
-            --primary-dark: #1e8e50;
-            --gold: #f1c40f;
-            --error: #e74c3c;
-        }
-        
-        .app {
-            width: 100%;
-            height: 100%;
+        /* ========= СТРАНИЦА 3: 20 РИТМОВ (СТЕКЛЯННЫЙ ДИЗАЙН) ========= */
+        .app-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            overflow-y: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease, background 0.3s ease;
-            background: radial-gradient(circle at 20% 30%, #0a0a12, #030308);
+            width: 100%;
+            height: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            background: radial-gradient(circle at 20% 10%, #101018, #050508);
+            box-shadow: 0 0 0 100vmax rgba(0,0,0,0.2);
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-        body.light-theme .app {
-            background: radial-gradient(circle at 20% 30%, #e8e8f0, #d0d0dc);
+        .app-container::-webkit-scrollbar {
+            display: none;
         }
-        .app.visible { opacity: 1; }
+        body.light-theme .app-container {
+            background: radial-gradient(circle at 20% 10%, #e0e0e8, #f0f0f5);
+        }
         
         /* СТЕКЛЯННЫЙ ХЕДЕР */
-        .header {
-            width: 100%;
-            padding: 15px 20px;
+        .new-header {
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
+            align-items: baseline;
+            background: rgba(20, 20, 28, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(39, 174, 96, 0.3);
             position: sticky;
             top: 0;
             z-index: 10;
-            background: rgba(30, 30, 40, 0.7);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(39, 174, 96, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 700;
         }
-        body.light-theme .header {
+        body.light-theme .new-header {
             background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(39, 174, 96, 0.5);
         }
-        
-        .header-title {
-            font-weight: bold;
+        .new-logo {
             font-size: 1rem;
+            letter-spacing: -0.3px;
             background: linear-gradient(135deg, #fff, #27ae60);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        body.light-theme .header-title {
+        body.light-theme .new-logo {
             background: linear-gradient(135deg, #000, #1e8e50);
             -webkit-background-clip: text;
             background-clip: text;
         }
         
-        /* СТЕКЛЯННЫЕ КНОПКИ ПЕРЕКЛЮЧАТЕЛИ */
-        .lang-switch, .theme-switch {
-            cursor: pointer;
+        /* СТЕКЛЯННАЯ КНОПКА ЯЗЫКА */
+        .new-lang-btn {
+            background: rgba(30, 30, 42, 0.7);
+            backdrop-filter: blur(12px);
             padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: all 0.1s ease;
-            background: rgba(42, 42, 58, 0.6);
-            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: 0.1s ease;
+            cursor: pointer;
             border: 1px solid rgba(39, 174, 96, 0.5);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 6px rgba(0, 0, 0, 0.2);
+            color: #27ae60;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-        body.light-theme .lang-switch, body.light-theme .theme-switch {
-            background: rgba(224, 224, 240, 0.7);
-            border: 1px solid rgba(39, 174, 96, 0.4);
-        }
-        .lang-switch:active, .theme-switch:active { transform: scale(0.95); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2); }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
+        .new-lang-btn:active { transform: scale(0.95); }
+        body.light-theme .new-lang-btn {
+            background: rgba(224, 224, 224, 0.7);
+            color: #1e8e50;
+            border-color: #27ae60;
         }
         
         /* СТЕКЛЯННЫЕ КАРТОЧКИ СТАТИСТИКИ */
-        .stat-card {
-            padding: 15px;
+        .new-stats {
+            display: flex;
+            gap: 14px;
+            padding: 16px 20px 8px 20px;
+        }
+        .new-card {
+            background: rgba(20, 20, 28, 0.6);
+            backdrop-filter: blur(8px);
+            flex: 1;
+            padding: 12px 6px;
             border-radius: 24px;
             text-align: center;
-            border-bottom: 3px solid var(--primary);
-            background: rgba(30, 30, 40, 0.5);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
-        body.light-theme .stat-card {
+        body.light-theme .new-card {
             background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #a0a0b0; }
-        body.light-theme .stat-label { color: #666; }
-        
-        .stat-val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--primary); text-shadow: 0 0 8px rgba(39, 174, 96, 0.4); }
-        .best-val { font-size: 0.7rem; color: var(--gold); margin-top: 5px; display: block; }
-        
-        /* СТЕКЛЯННЫЙ ТРЕК */
-        .track-container {
-            width: 85%;
-            height: 6px;
-            border-radius: 3px;
-            position: relative;
-            margin: 10px 0;
-            overflow: hidden;
-            background: rgba(42, 42, 58, 0.6);
-            backdrop-filter: blur(4px);
-            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.3);
+        .new-card span:first-child {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a0a0b0;
+            display: block;
         }
-        body.light-theme .track-container { background: rgba(200, 200, 210, 0.7); }
-        
-        #cursor { width: 8px; height: 100%; background: var(--primary); position: absolute; left: 0; border-radius: 3px; box-shadow: 0 0 6px var(--primary); transition: left 0.02s linear; }
+        body.light-theme .new-card span:first-child { color: #666; }
+        .new-val {
+            display: block;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #27ae60;
+            line-height: 1.2;
+            margin-top: 4px;
+            text-shadow: 0 0 6px rgba(39, 174, 96, 0.3);
+        }
+        #cur-style-name { font-size: 1.2rem; font-weight: 700; }
         
         /* СТЕКЛЯННЫЙ БАРАБАН */
-        #drum-pad {
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 35%, rgba(74, 74, 90, 0.8), rgba(17, 17, 34, 0.9));
-            backdrop-filter: blur(4px);
-            border: 3px solid rgba(39, 174, 96, 0.5);
+        .drum-wrapper {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 8px 20px 12px 20px;
+            flex-shrink: 0;
+        }
+        #drum-pad {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(42, 42, 54, 0.8), rgba(12, 12, 18, 0.9));
+            backdrop-filter: blur(4px);
+            border: 4px solid rgba(39, 174, 96, 0.5);
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 20px auto;
             cursor: pointer;
-            transition: transform 0.05s cubic-bezier(0.2, 0.9, 0.4, 1.1), border-color 0.1s;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.05s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.1s;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.2);
         }
         body.light-theme #drum-pad {
-            background: radial-gradient(circle at 35% 35%, rgba(200, 200, 210, 0.8), rgba(170, 170, 180, 0.9));
+            background: radial-gradient(circle at 30% 30%, rgba(204, 204, 204, 0.8), rgba(170, 170, 170, 0.9));
         }
-        #drum-pad.active { transform: scale(0.94); border-color: var(--primary); box-shadow: 0 0 30px var(--primary), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-        #drum-pad b { font-size: 1.5rem; color: white; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
+        #drum-pad.active {
+            transform: scale(0.92);
+            border-color: #27ae60;
+            box-shadow: 0 0 28px rgba(39, 174, 96, 0.4), 0 8px 15px black;
+        }
+        #pad-emoji { font-size: 4rem; filter: drop-shadow(0 4px 6px black); margin-bottom: 5px; }
+        .new-msg-area {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #f1c40f;
+            min-height: 32px;
+            margin: 0 20px;
+            text-shadow: 0 0 3px black;
+        }
         
-        /* СТЕКЛЯННЫЕ КОНТРОЛЛЫ */
-        .controls { 
-            width: 100%; 
-            max-width: 400px; 
-            padding: 20px 20px 60px;
+        /* СТЕКЛЯННАЯ ПАНЕЛЬ УПРАВЛЕНИЯ */
+        .new-controls {
+            background: rgba(20, 20, 28, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            margin: 8px 16px 20px 16px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-        .control-group { margin-bottom: 15px; }
-        .control-group label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; color: #b0b0c0; }
-        body.light-theme .control-group label { color: #555; }
+        body.light-theme .new-controls {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
         
-        input[type="range"] { 
-            width: 100%; 
-            height: 5px; 
-            -webkit-appearance: none; 
-            border-radius: 5px; 
-            outline: none; 
-            background: rgba(42, 42, 58, 0.6);
-            backdrop-filter: blur(4px);
+        .genre-chip {
+            background: rgba(30, 30, 42, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 60px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #f1c40f;
+            width: fit-content;
+            margin: 0 auto;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
         }
-        body.light-theme input[type="range"] { background: rgba(200, 200, 210, 0.7); }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px var(--primary); border: none; }
+        body.light-theme .genre-chip {
+            background: rgba(200, 200, 210, 0.6);
+            color: #e67e22;
+        }
         
         /* СТЕКЛЯННЫЙ ВЫПАДАЮЩИЙ СПИСОК */
-        select {
-            width: 100%;
-            padding: 12px;
-            background: rgba(30, 30, 40, 0.7);
-            backdrop-filter: blur(12px);
+        .new-select {
+            background: rgba(30, 30, 42, 0.7);
+            backdrop-filter: blur(8px);
+            color: white;
             border: 1px solid rgba(39, 174, 96, 0.4);
+            padding: 14px 18px;
             border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #e0e0e0;
+            font-size: 0.95rem;
             font-weight: 500;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2327ae60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-        body.light-theme select {
+        body.light-theme .new-select {
             background: rgba(255, 255, 255, 0.7);
             color: #000;
             border-color: #27ae60;
         }
         
-        /* СТЕКЛЯННАЯ 3D КНОПКА СТАРТ/СТОП */
-        .btn-main {
+        .dual-sliders {
+            display: flex;
+            gap: 18px;
+            justify-content: space-between;
+        }
+        .new-control-group {
+            flex: 1;
+            text-align: center;
+        }
+        .new-control-group label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ccc;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        }
+        body.light-theme .new-control-group label { color: #555; }
+        
+        /* СТЕКЛЯННЫЙ СЛАЙДЕР */
+        .new-input-range {
             width: 100%;
-            padding: 14px;
+            accent-color: #27ae60;
+            height: 5px;
+            border-radius: 10px;
+        }
+        
+        /* СТЕКЛЯННАЯ КНОПКА ТЕСТ ЗВУКА */
+        .btn-play {
             background: linear-gradient(135deg, rgba(39, 174, 96, 0.3), rgba(30, 142, 80, 0.2));
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(39, 174, 96, 0.6);
+            padding: 14px;
             border-radius: 60px;
-            font-size: 1rem;
             font-weight: bold;
+            font-size: 1rem;
             color: #27ae60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.1s linear;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             cursor: pointer;
-            margin-top: 25px;
-            transition: all 0.1s ease;
-            text-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 4px rgba(39, 174, 96, 0.5);
             position: relative;
             overflow: hidden;
         }
-        .btn-main::before {
+        .btn-play::before {
             content: '';
             position: absolute;
             top: 0;
@@ -581,21 +636,39 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.4s ease;
+            transition: left 0.5s ease;
         }
-        .btn-main:hover::before { left: 100%; }
-        .btn-main:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-        .btn-main.stop { 
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.3), rgba(200, 50, 40, 0.2));
-            border-color: rgba(231, 76, 60, 0.6);
-            color: #e74c3c;
+        .btn-play:hover::before { left: 100%; }
+        .btn-play:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        body.light-theme .btn-play {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(30, 142, 80, 0.1));
+            color: #1e8e50;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
         
-        .msg { height: 30px; font-size: 1rem; font-weight: bold; text-align: center; margin: 10px 0; }
-        .perfect { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
-        .good { color: #2ecc71; text-shadow: 0 0 4px #2ecc71; }
-        .hit { color: #3498db; text-shadow: 0 0 4px #3498db; }
-        .miss { color: var(--error); text-shadow: 0 0 4px var(--error); }
+        .new-footer {
+            font-size: 0.55rem;
+            text-align: center;
+            color: #5a5a70;
+            padding: 12px;
+            margin-top: auto;
+        }
+        body.light-theme .new-footer { color: #999; }
+        
+        @media (max-aspect-ratio: 9/16) {
+            .app-container { max-width: 100vw; }
+            #drum-pad { width: 190px; height: 190px; }
+            #pad-emoji { font-size: 3rem; }
+        }
+        @media (max-height: 700px) {
+            .new-stats { padding-top: 8px; }
+            .new-controls { padding: 12px 16px; gap: 12px; }
+            #drum-pad { width: 170px; height: 170px; }
+        }
+        button, select, #drum-pad { touch-action: manipulation; }
     </style>
 </head>
 <body>
@@ -617,7 +690,7 @@
     <!-- СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА -->
     <div id="p2" class="page">
         <button class="back-btn" onclick="goToPage('p1')">←</button>
-        <div class="proj-list no-scrollbar">
+        <div class="proj-list">
             <div class="support-block">
                 <h3>🤝 ПОДДЕРЖАТЬ ПРОЕКТ</h3>
                 <div class="free-badge">💙 Приложение бесплатное. Было и останется.</div>
@@ -641,168 +714,64 @@
             <div class="proj-item" onclick="openLink('https://anti-ai-passwords.vercel.app/')">🔐 Анти ИИ Пароли</div>
             <div class="proj-item" onclick="openLink('https://anti-ai-memory.vercel.app/')">🧠 Анти ИИ Память</div>
             <div class="proj-item" onclick="openLink('https://rutube.ru/channel/24404224/')">✨ ВолшебствО</div>
-            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ 20 РИТМОВ</button>
+            <!-- КНОПКА "ОТКРЫТЬ" (без слова Метроном) -->
+            <button class="btn-open" onclick="goToPage('p3')">🎵 ОТКРЫТЬ</button>
         </div>
     </div>
 
     <!-- СТРАНИЦА 3: 20 РИТМОВ -->
     <div id="p3" class="page">
         <button class="back-btn" onclick="goToPage('p2')">←</button>
-        <div id="app" class="app no-scrollbar">
-            <div class="header">
-                <span class="header-title" id="title">🥁 Анти ИИ Барабан</span>
-                <div style="display: flex; gap: 8px;">
-                    <span id="theme-switch" class="theme-switch">🌓 Тема</span>
-                    <span id="lang-switch" class="lang-switch">🌐 RU/EN</span>
+        <div class="app-container">
+            <div class="new-header">
+                <div class="new-logo">🥁 Анти ИИ · 20 ритмов</div>
+                <div id="new-lang-btn" class="new-lang-btn">RU/EN</div>
+            </div>
+
+            <div class="new-stats">
+                <div class="new-card"><span id="lbl-acc">Точность</span><span id="accuracy" class="new-val">100%</span></div>
+                <div class="new-card"><span id="lbl-style">Стиль</span><span id="cur-style-name" class="new-val" style="font-size: 1.2rem;">Kick</span></div>
+            </div>
+
+            <div class="drum-wrapper">
+                <div id="drum-pad">
+                    <span id="pad-emoji">🥁</span>
+                    <span id="lbl-tap">ТАП</span>
                 </div>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label" id="lbl-acc">Точность</div>
-                    <span id="accuracy" class="stat-val">0%</span>
-                    <span class="best-val">🏆 <span id="best-label">Рекорд:</span> <span id="best-acc">0%</span></span>
+
+            <div id="msg" class="new-msg-area"></div>
+
+            <div class="new-controls">
+                <div class="genre-chip" id="genre-hint">🎧 Жанр: Рок / Поп</div>
+                <select id="sound-select" class="new-select"></select>
+                
+                <div class="dual-sliders">
+                    <div class="new-control-group">
+                        <label>🔊 ГРОМКОСТЬ</label>
+                        <input type="range" id="vol-reg" min="0" max="1" step="0.02" value="0.65" class="new-input-range">
+                    </div>
+                    <div class="new-control-group">
+                        <label>🎵 ВЫСОТА</label>
+                        <input type="range" id="pitch-reg" min="0.5" max="2.0" step="0.02" value="1.0" class="new-input-range">
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label" id="lbl-hits">Удары</div>
-                    <span id="hits" class="stat-val">0</span>
-                </div>
+
+                <button id="play-test" class="btn-play">🎧 ТЕСТ ЗВУКА</button>
             </div>
-            <div class="track-container"><div id="cursor"></div></div>
-            <div id="drum-pad"><b id="lbl-tap">ТАП</b></div>
-            <div id="msg" class="msg"></div>
-            <div class="controls">
-                <div class="control-group">
-                    <label>🎵 BPM: <b id="bpm-val">120</b></label>
-                    <input type="range" id="bpm" min="40" max="200" value="120" step="1">
-                </div>
-                <div class="control-group">
-                    <select id="sound-style">
-                        <option value="kick">🥁 Kick Drum</option>
-                        <option value="snare">🎵 Snare</option>
-                        <option value="hihat">🔔 Hi-Hat</option>
-                        <option value="cowbell">🛎️ Cowbell</option>
-                        <option value="wood">🪵 Woodblock</option>
-                        <option value="laser">⚡ Laser</option>
-                    </select>
-                </div>
-                <button id="start-btn" class="btn-main">🎮 СТАРТ</button>
-            </div>
+            <div class="new-footer">⚡ Жми по кругу | 20 стилей | Анти-ИИ ритм</div>
         </div>
     </div>
 </div>
 
 <script>
-    // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
-    let audioCtx = null;
-    let bpm = 120;
-    let isRunning = false;
-    let nextNoteTime = 0;
-    let timerID = null;
-    let lastTickTime = 0;
-    let totalHits = 0;
-    let scoreSum = 0;
-    
-    // ==================== ПЕРЕВОДЫ ====================
-    const translations = {
-        ru: {
-            title: "🥁 Анти ИИ Барабан",
-            accuracy: "Точность",
-            hits: "Удары",
-            best: "Рекорд:",
-            tap: "ТАП",
-            start: "🎮 СТАРТ",
-            stop: "⏹️ СТОП",
-            perfect: "🎯 ИДЕАЛЬНО!",
-            good: "👍 ХОРОШО",
-            hit: "⚡ ПОПАЛ",
-            miss: "😅 МИМО"
-        },
-        en: {
-            title: "🥁 Anti-AI Drum",
-            accuracy: "Accuracy",
-            hits: "Hits",
-            best: "Best:",
-            tap: "TAP",
-            start: "🎮 START",
-            stop: "⏹️ STOP",
-            perfect: "🎯 PERFECT!",
-            good: "👍 GOOD",
-            hit: "⚡ HIT",
-            miss: "😅 MISS"
-        }
-    };
-    
-    let currentLang = 'ru';
-    
-    function stopMetronome() {
-        if (isRunning) {
-            isRunning = false;
-            if (timerID) {
-                clearTimeout(timerID);
-                timerID = null;
-            }
-            const startBtn = document.getElementById('start-btn');
-            if (startBtn) {
-                const t = translations[currentLang];
-                startBtn.innerText = t.start;
-                startBtn.classList.remove('stop');
-            }
-        }
-    }
-    
-    function updateLanguage() {
-        const t = translations[currentLang];
-        document.getElementById('title').innerText = t.title;
-        document.getElementById('lbl-acc').innerText = t.accuracy;
-        document.getElementById('lbl-hits').innerText = t.hits;
-        document.getElementById('best-label').innerText = t.best;
-        document.getElementById('lbl-tap').innerText = t.tap;
-        const startBtn = document.getElementById('start-btn');
-        if (startBtn) {
-            startBtn.innerText = isRunning ? t.stop : t.start;
-        }
-    }
-    
-    function toggleLanguage() {
-        currentLang = currentLang === 'ru' ? 'en' : 'ru';
-        updateLanguage();
-    }
-    
-    function toggleTheme() {
-        document.body.classList.toggle('light-theme');
-        const isLight = document.body.classList.contains('light-theme');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    }
-    
-    function loadTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-        } else {
-            document.body.classList.remove('light-theme');
-        }
-    }
-    
+    // ==================== НАВИГАЦИЯ ====================
     function goToPage(id) {
-        if (id !== 'p3') {
-            stopMetronome();
-        }
-        
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         const logo = document.getElementById('logo');
         if (id === 'p1') logo.style.display = 'none';
         else logo.style.display = 'flex';
-        
-        if (id === 'p3') {
-            setTimeout(() => {
-                const appDiv = document.getElementById('app');
-                if (appDiv) appDiv.classList.add('visible');
-            }, 100);
-        } else {
-            const appDiv = document.getElementById('app');
-            if (appDiv) appDiv.classList.remove('visible');
-        }
     }
 
     function openLink(url) {
@@ -819,6 +788,7 @@
         });
     }
 
+    // ==================== СТРАНИЦА 1: ЗАСТАВКА ====================
     (function initSplash() {
         const photo = document.getElementById('photo');
         const video = document.getElementById('video');
@@ -873,163 +843,217 @@
         updateBtn();
     })();
 
+    // ==================== СТРАНИЦА 3: 20 РИТМОВ ====================
+    const drumStyles = [
+        { id: 'kick', name: 'Kick (Бочка)', emoji: '🥁', genre: 'Рок/Поп', freq: 140, type: 'sine', decay: 0.55 },
+        { id: 'snare', name: 'Snare (Малый)', emoji: '🎵', genre: 'Рок/Поп', freq: 270, type: 'triangle', decay: 0.22 },
+        { id: 'hihat', name: 'Hi-Hat (Хэт)', emoji: '🔔', genre: 'Рок/Поп', freq: 8200, type: 'square', decay: 0.06 },
+        { id: 'tom', name: 'Tom (Том)', emoji: '🎧', genre: 'Рок', freq: 85, type: 'sine', decay: 0.62 },
+        { id: 'ride', name: 'Ride (Райд)', emoji: '🛞', genre: 'Джаз', freq: 4100, type: 'sine', decay: 0.75 },
+        { id: 'crash', name: 'Crash (Крэш)', emoji: '💥', genre: 'Рок/Метал', freq: 3100, type: 'square', decay: 0.95 },
+        { id: 'kick808', name: '808 Kick', emoji: '🟣', genre: 'Хип-хоп', freq: 58, type: 'sine', decay: 1.15 },
+        { id: 'snare909', name: '909 Snare', emoji: '🔵', genre: 'Техно', freq: 210, type: 'triangle', decay: 0.28 },
+        { id: 'clap', name: 'Clap (Хлопок)', emoji: '👏', genre: 'Хип-хоп', freq: 520, type: 'square', decay: 0.12 },
+        { id: 'rimshot', name: 'Rimshot', emoji: '⚪', genre: 'Фанк', freq: 1250, type: 'triangle', decay: 0.07 },
+        { id: 'cowbell', name: 'Cowbell', emoji: '🛎️', genre: 'Фанк/Латин', freq: 780, type: 'square', decay: 0.18 },
+        { id: 'conga', name: 'Conga', emoji: '🥁', genre: 'Латин', freq: 310, type: 'sine', decay: 0.24 },
+        { id: 'bongo', name: 'Bongo', emoji: '🪘', genre: 'Латин', freq: 460, type: 'sine', decay: 0.13 },
+        { id: 'djembe', name: 'Djembe', emoji: '🪘', genre: 'Этнический', freq: 195, type: 'sine', decay: 0.42 },
+        { id: 'tamb', name: 'Tambourine', emoji: '🔔', genre: 'Поп/Дэнс', freq: 6200, type: 'triangle', decay: 0.09 },
+        { id: 'shaker', name: 'Shaker', emoji: '🔹', genre: 'Латин/Поп', freq: 9800, type: 'sine', decay: 0.04 },
+        { id: 'wood', name: 'Woodblock', emoji: '🪵', genre: 'Латин/Джаз', freq: 1180, type: 'sine', decay: 0.06 },
+        { id: 'ekick', name: 'Electro Kick', emoji: '⚡', genre: 'EDM', freq: 95, type: 'sine', decay: 0.32 },
+        { id: 'esnare', name: 'Electro Snare', emoji: '⚡', genre: 'EDM', freq: 430, type: 'square', decay: 0.11 },
+        { id: 'loop', name: 'Perc Loop', emoji: '✨', genre: 'Универсальный', freq: 1480, type: 'triangle', decay: 0.09 }
+    ];
+
+    let audioCtx = null;
+    let curStyle = drumStyles[0];
+    let lastMsgTimeout = null;
+
+    const i18nNew = {
+        ru: { acc: "Точность", style: "Стиль", tap: "ТАП", test: "🎧 ТЕСТ ЗВУКА" },
+        en: { acc: "Accuracy", style: "Style", tap: "TAP", test: "🎧 TEST SOUND" }
+    };
+    let curLangNew = 'ru';
+
+    const selectEl = document.getElementById('sound-select');
+    const volSlider = document.getElementById('vol-reg');
+    const pitchSlider = document.getElementById('pitch-reg');
+    const drumPadNew = document.getElementById('drum-pad');
+    const msgDiv = document.getElementById('msg');
+    const accuracySpan = document.getElementById('accuracy');
+
+    let hitCounter = 0;
+    let lastHit = 0;
+    function updateAccuracyFeedback() {
+        const now = Date.now();
+        if (lastHit && (now - lastHit) < 280) {
+            hitCounter = Math.min(hitCounter + 1, 100);
+        } else {
+            hitCounter = Math.max(0, hitCounter - 2);
+        }
+        lastHit = now;
+        let accPercent = Math.min(100, Math.floor(70 + (hitCounter * 0.3)));
+        if (accPercent < 20) accPercent = 20;
+        accuracySpan.innerText = accPercent + '%';
+        if(accPercent > 80) accuracySpan.style.textShadow = "0 0 8px #27ae60";
+        else accuracySpan.style.textShadow = "none";
+    }
+
+    drumStyles.forEach(s => selectEl.add(new Option(s.name, s.id)));
+
+    const savedStyleId = localStorage.getItem('selectedDrumStyle');
+    if(savedStyleId && drumStyles.some(s => s.id === savedStyleId)) {
+        selectEl.value = savedStyleId;
+        updateUI(savedStyleId);
+    } else {
+        updateUI(selectEl.value);
+    }
+
+    if(localStorage.getItem('drumVolume')) volSlider.value = localStorage.getItem('drumVolume');
+    if(localStorage.getItem('drumPitch')) pitchSlider.value = localStorage.getItem('drumPitch');
+
     function initAudio() {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         return audioCtx;
     }
-    
-    function playSynth(freq, type, decay, vol = 0.7) {
-        if (!audioCtx) return;
+
+    function playSound(style) {
+        initAudio();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        
+        const vol = parseFloat(volSlider.value);
+        const pitch = parseFloat(pitchSlider.value);
         const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(vol, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + decay);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(now + decay);
-    }
-    
-    const sounds = {
-        kick: () => playSynth(150, 'sine', 0.4, 0.8),
-        snare: () => playSynth(250, 'triangle', 0.15, 0.7),
-        hihat: () => playSynth(8000, 'sine', 0.05, 0.2),
-        cowbell: () => playSynth(800, 'square', 0.15, 0.3),
-        wood: () => playSynth(1200, 'sine', 0.05, 0.5),
-        laser: () => { playSynth(1000, 'sine', 0.2, 0.4); setTimeout(() => playSynth(600, 'sine', 0.15, 0.3), 50); }
-    };
-    
-    function scheduler() {
-        if (!isRunning) return;
-        while (nextNoteTime < audioCtx.currentTime + 0.1) {
-            lastTickTime = nextNoteTime;
+        
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(vol, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, now + style.decay);
+        
+        if(style.id === 'crash' || style.id === 'ride') {
             const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.frequency.value = 1000;
-            gain.gain.setValueAtTime(0.08, nextNoteTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, nextNoteTime + 0.04);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(nextNoteTime);
-            osc.stop(nextNoteTime + 0.04);
-            nextNoteTime += 60.0 / bpm;
+            osc.type = style.type;
+            osc.frequency.setValueAtTime(style.freq * pitch, now);
+            osc.frequency.exponentialRampToValueAtTime(style.freq * pitch * 0.5, now + style.decay * 0.7);
+            const gain2 = audioCtx.createGain();
+            gain2.gain.setValueAtTime(vol * 0.4, now);
+            gain2.gain.exponentialRampToValueAtTime(0.001, now + style.decay);
+            osc.connect(gain2);
+            gain2.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(now + style.decay);
         }
-        timerID = setTimeout(scheduler, 25);
+        
+        const mainOsc = audioCtx.createOscillator();
+        mainOsc.type = style.type;
+        let freqVal = style.freq * pitch;
+        mainOsc.frequency.setValueAtTime(freqVal, now);
+        if(style.id.includes('kick') || style.id.includes('808') || style.id === 'tom') {
+            mainOsc.frequency.exponentialRampToValueAtTime(0.5, now + style.decay);
+        }
+        
+        mainOsc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        mainOsc.start();
+        mainOsc.stop(now + style.decay);
+        
+        if("vibrate" in navigator) navigator.vibrate(12);
+        return mainOsc;
     }
-    
-    function updateCursor() {
-        if (!isRunning || !audioCtx) { requestAnimationFrame(updateCursor); return; }
-        const now = audioCtx.currentTime;
-        const cycle = 60 / bpm;
-        const elapsed = (now - lastTickTime) % cycle;
-        const progress = Math.min(1, Math.max(0, elapsed / cycle));
-        const cursor = document.getElementById('cursor');
-        if (cursor) cursor.style.left = (progress * 100) + "%";
-        requestAnimationFrame(updateCursor);
-    }
-    
-    function handleTap() {
-        initAudio();
-        const style = document.getElementById('sound-style').value;
-        if (sounds[style]) sounds[style]();
-        if ("vibrate" in navigator) navigator.vibrate(15);
-        const pad = document.getElementById('drum-pad');
-        pad.classList.add('active');
-        setTimeout(() => pad.classList.remove('active'), 60);
-        if (!isRunning) return;
-        
-        const now = audioCtx.currentTime;
-        const diff = Math.abs(now - lastTickTime) * 1000;
-        let points = 0, msgClass = '', msgText = '';
-        const t = translations[currentLang];
-        
-        if (diff < 30) { points = 100; msgClass = 'perfect'; msgText = t.perfect; }
-        else if (diff < 70) { points = 70; msgClass = 'good'; msgText = t.good; }
-        else if (diff < 150) { points = 40; msgClass = 'hit'; msgText = t.hit; }
-        else { points = 0; msgClass = 'miss'; msgText = t.miss; }
-        
-        totalHits++; scoreSum += points;
-        const currentAccuracy = Math.round(scoreSum / totalHits);
-        document.getElementById('hits').innerText = totalHits;
-        document.getElementById('accuracy').innerText = currentAccuracy + "%";
-        const msgDiv = document.getElementById('msg');
-        msgDiv.innerText = msgText;
-        msgDiv.className = 'msg ' + msgClass;
-        const best = localStorage.getItem('drumBest') || 0;
-        if (currentAccuracy > best) {
-            localStorage.setItem('drumBest', currentAccuracy);
-            document.getElementById('best-acc').innerText = currentAccuracy + "%";
+
+    function updateUI(id) {
+        const found = drumStyles.find(s => s.id === id);
+        if(found) {
+            curStyle = found;
+            document.getElementById('cur-style-name').innerText = found.name.split(' ')[0];
+            document.getElementById('pad-emoji').innerText = found.emoji;
+            document.getElementById('genre-hint').innerHTML = `🎵 ${found.genre}`;
+            localStorage.setItem('selectedDrumStyle', id);
+        } else {
+            curStyle = drumStyles[0];
+            document.getElementById('cur-style-name').innerText = drumStyles[0].name;
         }
     }
-    
-    function startTraining() {
-        initAudio();
-        if (audioCtx.state === 'suspended') audioCtx.resume().then(() => actuallyStart());
-        else actuallyStart();
+
+    function onHit(e) {
+        e.preventDefault();
+        playSound(curStyle);
+        drumPadNew.classList.add('active');
+        setTimeout(() => drumPadNew.classList.remove('active'), 80);
+        updateAccuracyFeedback();
+        
+        const msgText = `🥁 ${curStyle.name}  •  ${curStyle.genre}`;
+        if(lastMsgTimeout) clearTimeout(lastMsgTimeout);
+        msgDiv.innerHTML = msgText;
+        lastMsgTimeout = setTimeout(() => {
+            if(msgDiv.innerHTML === msgText) msgDiv.innerHTML = '';
+        }, 650);
     }
+
+    drumPadNew.addEventListener('pointerdown', onHit);
+    drumPadNew.addEventListener('touchstart', onHit, {passive: false});
     
-    function actuallyStart() {
-        const t = translations[currentLang];
-        if (isRunning) {
-            isRunning = false;
-            if (timerID) {
-                clearTimeout(timerID);
-                timerID = null;
-            }
-            const btn = document.getElementById('start-btn');
-            btn.innerText = t.start;
-            btn.classList.remove('stop');
-            return;
-        }
-        isRunning = true;
-        totalHits = 0;
-        scoreSum = 0;
-        document.getElementById('hits').innerText = "0";
-        document.getElementById('accuracy').innerText = "0%";
-        document.getElementById('msg').innerText = "";
-        nextNoteTime = audioCtx.currentTime;
-        lastTickTime = nextNoteTime;
-        scheduler();
-        updateCursor();
-        const btn = document.getElementById('start-btn');
-        btn.innerText = t.stop;
-        btn.classList.add('stop');
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        loadTheme();
-        
-        const startBtn = document.getElementById('start-btn');
-        const bpmSlider = document.getElementById('bpm');
-        const drumPad = document.getElementById('drum-pad');
-        const langSwitch = document.getElementById('lang-switch');
-        const themeSwitch = document.getElementById('theme-switch');
-        
-        if (startBtn) startBtn.onclick = startTraining;
-        if (bpmSlider) bpmSlider.oninput = function() { bpm = parseInt(this.value); document.getElementById('bpm-val').innerText = bpm; };
-        if (drumPad) drumPad.onpointerdown = (e) => { e.preventDefault(); handleTap(); };
-        if (langSwitch) langSwitch.onclick = toggleLanguage;
-        if (themeSwitch) themeSwitch.onclick = toggleTheme;
-        window.onkeydown = (e) => { if (e.code === 'Space') { e.preventDefault(); handleTap(); } };
-        
-        const savedBest = localStorage.getItem('drumBest');
-        if (savedBest) document.getElementById('best-acc').innerText = savedBest + "%";
-        
-        updateLanguage();
+    document.getElementById('play-test').addEventListener('click', (e) => {
+        e.preventDefault();
+        playSound(curStyle);
+        msgDiv.innerHTML = `🎧 ${curStyle.name}`;
+        if(lastMsgTimeout) clearTimeout(lastMsgTimeout);
+        lastMsgTimeout = setTimeout(() => { if(msgDiv.innerHTML.includes(curStyle.name)) msgDiv.innerHTML = ''; }, 500);
     });
     
-    document.body.addEventListener('touchstart', () => {
-        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    }, { once: true });
+    selectEl.addEventListener('change', (e) => updateUI(e.target.value));
+    volSlider.addEventListener('input', (e) => localStorage.setItem('drumVolume', e.target.value));
+    pitchSlider.addEventListener('input', (e) => localStorage.setItem('drumPitch', e.target.value));
     
-    if ('serviceWorker' in navigator) {
-        const swCode = `const CACHE_NAME = 'drum-v4'; self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
-        const blob = new Blob([swCode], { type: 'text/javascript' });
-        navigator.serviceWorker.register(URL.createObjectURL(blob));
+    window.addEventListener('keydown', (e) => {
+        if(e.code === 'Space' && !e.repeat) {
+            e.preventDefault();
+            onHit(e);
+        }
+    });
+    
+    const newLangBtn = document.getElementById('new-lang-btn');
+    newLangBtn.addEventListener('click', () => {
+        curLangNew = curLangNew === 'ru' ? 'en' : 'ru';
+        const t = i18nNew[curLangNew];
+        document.getElementById('lbl-acc').innerText = t.acc;
+        document.getElementById('lbl-style').innerText = t.style;
+        document.getElementById('lbl-tap').innerText = t.tap;
+        document.getElementById('play-test').innerHTML = t.test;
+    });
+    
+    const unlockAudio = () => {
+        if(audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        document.body.removeEventListener('touchstart', unlockAudio);
+        document.body.removeEventListener('click', unlockAudio);
+    };
+    document.body.addEventListener('touchstart', unlockAudio, { once: true });
+    document.body.addEventListener('click', unlockAudio, { once: true });
+    
+    window.addEventListener('load', () => {
+        initAudio();
+        accuracySpan.innerText = '100%';
+        setInterval(() => {
+            if(hitCounter > 0) hitCounter = Math.max(0, hitCounter - 1);
+            let acc = Math.min(100, Math.floor(70 + hitCounter * 0.35));
+            if(acc < 15) acc = 15;
+            accuracySpan.innerText = acc + '%';
+        }, 800);
+    });
+    
+    if('serviceWorker' in navigator) {
+        const swCode = `const CACHE='drum-v9';self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.add(location.href))));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+        const blob = new Blob([swCode], {type: 'text/javascript'});
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(e=>console.log("sw skip"));
     }
+    
+    function initFromStorage() {
+        if(selectEl.value) updateUI(selectEl.value);
+    }
+    initFromStorage();
 </script>
 </body>
 </html>
