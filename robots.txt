@@ -1,0 +1,33 @@
+# robots.txt для сайта Анти ИИ 20 ритмов
+# https://anti-ai-20-ritmov.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных страниц (если появятся)
+Disallow: /404.html
+Disallow: /500.html
+
+# Указываем путь к карте сайта
+Sitemap: https://anti-ai-20-ritmov.vercel.app/sitemap.xml
+
+# Хост сайта (для Яндекс)
+Host: https://anti-ai-20-ritmov.vercel.app
+
+# Задержка между запросами для медленных роботов
+Crawl-delay: 1
+
+# Основные поисковые роботы
+User-agent: Yandex
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Mail.Ru
+Allow: /
+
+User-agent: Bingbot
+Allow: /
