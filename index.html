@@ -22,6 +22,7 @@
             justify-content: center;
             align-items: center;
             font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            overflow: hidden; /* Скрыть скроллбар страницы 1 */
         }
 
         .screen {
@@ -46,6 +47,11 @@
             display: none;
             background: #000;
             overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .page::-webkit-scrollbar {
+            display: none;
         }
 
         .page.active {
@@ -101,7 +107,7 @@
         }
         .back-btn:active { transform: scale(0.95); }
 
-        /* ========= СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) ========= */
+        /* ========= СТРАНИЦА 1: ЗАСТАВКА ========= */
         .layers {
             position: absolute;
             top: 0;
@@ -148,11 +154,16 @@
             .sound-btn .txt { font-size: 1.1rem; }
         }
 
-        /* ========= СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА (НЕ ТРОГАТЬ) ========= */
+        /* ========= СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА ========= */
         .proj-list {
             padding: 70px 16px 30px;
             height: 100%;
             overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .proj-list::-webkit-scrollbar {
+            display: none;
         }
         
         .support-block {
@@ -282,6 +293,11 @@
             overflow-y: auto;
             opacity: 0;
             transition: opacity 0.5s ease;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .app::-webkit-scrollbar {
+            display: none;
         }
         .app.visible { opacity: 1; }
         
@@ -438,27 +454,17 @@
         .good { color: #2ecc71; }
         .hit { color: #3498db; }
         .miss { color: var(--error); }
-        
-        .app::-webkit-scrollbar {
-            width: 3px;
-        }
-        .app::-webkit-scrollbar-track {
-            background: var(--surface);
-        }
-        .app::-webkit-scrollbar-thumb {
-            background: var(--primary);
-        }
     </style>
 </head>
 <body>
 <div class="screen">
-    <!-- ЛОГОТИП С FAVICON (название изменено на "Анти ИИ 20 ритмов") -->
+    <!-- ЛОГОТИП С FAVICON -->
     <div class="logo-bar" id="logo" style="display: none;">
         <div class="logo-icon"></div>
         <span class="logo-text">Анти ИИ 20 ритмов</span>
     </div>
 
-    <!-- СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) -->
+    <!-- СТРАНИЦА 1: ЗАСТАВКА -->
     <div id="p1" class="page active">
         <div class="layers">
             <img id="photo" src="frame.jpg" style="z-index:2">
@@ -467,7 +473,7 @@
         <button id="soundBtn" class="sound-btn"><span class="ico">🔇</span><span class="txt">Вкл звук</span></button>
     </div>
 
-    <!-- СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА (НЕ ТРОГАТЬ) -->
+    <!-- СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА -->
     <div id="p2" class="page">
         <button class="back-btn" onclick="goToPage('p1')">←</button>
         <div class="proj-list">
@@ -567,7 +573,7 @@
         });
     }
 
-    // ==================== СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) ====================
+    // ==================== СТРАНИЦА 1: ЗАСТАВКА ====================
     (function initSplash() {
         const photo = document.getElementById('photo');
         const video = document.getElementById('video');
@@ -928,3 +934,4 @@
     }
 </script>
 </body>
+</html>
