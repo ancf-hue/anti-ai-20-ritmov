@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Анти ИИ Метроном</title>
+    <title>Анти ИИ 20 ритмов</title> <!-- ← ИЗМЕНЕНО -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         /* === БАЗОВЫЕ СТИЛИ === */
@@ -22,7 +22,11 @@
             justify-content: center;
             align-items: center;
             font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-            overflow: hidden; /* Скрыть скроллбар страницы 1 */
+            transition: background 0.3s ease;
+        }
+
+        body.light-theme {
+            background: #f5f5f5;
         }
 
         .screen {
@@ -35,9 +39,13 @@
             background: #000;
             overflow: hidden;
             margin: auto;
+            transition: background 0.3s ease;
         }
 
-        /* === СТРАНИЦЫ === */
+        body.light-theme .screen {
+            background: #f5f5f5;
+        }
+
         .page {
             position: absolute;
             top: 0;
@@ -46,19 +54,18 @@
             height: 100%;
             display: none;
             background: #000;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            overflow-y: hidden;
+            transition: background 0.3s ease;
         }
-        .page::-webkit-scrollbar {
-            display: none;
+
+        body.light-theme .page {
+            background: #f5f5f5;
         }
 
         .page.active {
             display: block;
         }
 
-        /* === ЛОГОТИП С FAVICON === */
         .logo-bar {
             position: absolute;
             top: 12px;
@@ -74,6 +81,11 @@
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             pointer-events: none;
+            transition: background 0.3s ease;
+        }
+        body.light-theme .logo-bar {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         .logo-icon {
             width: 22px;
@@ -84,8 +96,8 @@
             background-position: center;
         }
         .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; }
+        body.light-theme .logo-text { color: #000; }
 
-        /* === КНОПКА НАЗАД === */
         .back-btn {
             position: sticky;
             top: 16px;
@@ -104,10 +116,22 @@
             align-items: center;
             justify-content: center;
             margin: 16px 0 0 16px;
+            transition: 0.1s, background 0.3s;
+        }
+        body.light-theme .back-btn {
+            background: rgba(0, 0, 0, 0.15);
+            color: #000;
         }
         .back-btn:active { transform: scale(0.95); }
 
-        /* ========= СТРАНИЦА 1: ЗАСТАВКА ========= */
+        /* === СКРЫТИЕ СКРОЛЛБАРОВ === */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* СТРАНИЦА 1: ЗАСТАВКА */
         .layers {
             position: absolute;
             top: 0;
@@ -154,16 +178,14 @@
             .sound-btn .txt { font-size: 1.1rem; }
         }
 
-        /* ========= СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА ========= */
+        /* СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА */
         .proj-list {
-            padding: 70px 16px 30px;
+            padding: 20px 16px 80px;
             height: 100%;
-            overflow-y: auto;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            overflow-y: hidden;
         }
-        .proj-list::-webkit-scrollbar {
-            display: none;
+        .proj-list.no-scrollbar {
+            overflow-y: auto;
         }
         
         .support-block {
@@ -172,6 +194,11 @@
             padding: 20px;
             margin-bottom: 25px;
             border: 1px solid rgba(39, 174, 96, 0.3);
+            transition: background 0.3s ease;
+        }
+        body.light-theme .support-block {
+            background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
+            border: 1px solid #27ae60;
         }
         .support-block h3 {
             color: #f1c40f;
@@ -179,6 +206,7 @@
             text-align: center;
             margin-bottom: 10px;
         }
+        body.light-theme .support-block h3 { color: #e67e22; }
         .free-badge {
             text-align: center;
             color: #27ae60;
@@ -192,6 +220,7 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        body.light-theme .support-text { color: #555; }
         .phone-row {
             background: #0a0a0a;
             padding: 14px;
@@ -202,6 +231,7 @@
             margin: 15px 0;
             border: 1px solid #27ae60;
         }
+        body.light-theme .phone-row { background: #f0f0f0; }
         .phone-row span {
             font-size: 1.1rem;
             font-weight: bold;
@@ -224,6 +254,7 @@
             text-align: center;
             margin-top: 12px;
         }
+        body.light-theme .support-note { color: #666; }
         .support-thanks {
             text-align: center;
             color: #27ae60;
@@ -238,6 +269,7 @@
             border-left: 4px solid #27ae60;
             padding-left: 12px;
         }
+        body.light-theme .other-projects-title { color: #000; }
         
         .proj-item {
             padding: 14px;
@@ -249,6 +281,11 @@
             color: #fff;
             font-weight: 600;
             transition: 0.1s;
+        }
+        body.light-theme .proj-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #000;
         }
         .proj-item:active {
             background: #27ae60;
@@ -266,19 +303,14 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 30px;
         }
         .btn-metronom:active { transform: scale(0.97); }
 
-        /* ========= СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ ========= */
+        /* СТРАНИЦА 3: МЕТРОНОМ / 20 РИТМОВ */
         :root {
             --primary: #27ae60;
             --primary-dark: #1e8e50;
-            --bg: #121212;
-            --surface: #1e1e1e;
-            --surface-light: #2a2a2a;
-            --text: #e0e0e0;
-            --text-dim: #888;
             --gold: #f1c40f;
             --error: #e74c3c;
         }
@@ -289,15 +321,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: var(--bg);
-            overflow-y: auto;
+            overflow-y: hidden;
             opacity: 0;
-            transition: opacity 0.5s ease;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            transition: opacity 0.5s ease, background 0.3s ease;
         }
-        .app::-webkit-scrollbar {
-            display: none;
+        body:not(.light-theme) .app {
+            background: #121212;
+        }
+        body.light-theme .app {
+            background: #f5f5f5;
         }
         .app.visible { opacity: 1; }
         
@@ -306,81 +338,95 @@
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
-            background: var(--surface);
             position: sticky;
             top: 0;
             z-index: 10;
+            transition: background 0.3s ease;
         }
+        body:not(.light-theme) .header { background: #1e1e1e; }
+        body.light-theme .header { background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         
-        .stats {
-            display: flex;
+        .header-title {
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        body:not(.light-theme) .header-title { color: #e0e0e0; }
+        body.light-theme .header-title { color: #000; }
+        
+        .lang-switch {
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.1s;
+            background: #2a2a2a;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+        body.light-theme .lang-switch {
+            background: #e0e0e0;
+            color: #1e8e50;
+            border: 1px solid #27ae60;
+        }
+        .lang-switch:active { transform: scale(0.95); }
+        
+        .theme-switch {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.1s;
+            background: #2a2a2a;
+            color: #f1c40f;
+            border: 1px solid #f1c40f;
+            margin-right: 8px;
+        }
+        body.light-theme .theme-switch {
+            background: #e0e0e0;
+            color: #e67e22;
+            border: 1px solid #e67e22;
+        }
+        .theme-switch:active { transform: scale(0.95); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
             padding: 20px;
             width: 100%;
             max-width: 400px;
         }
-        
-        .card {
-            background: var(--surface);
-            flex: 1;
+        .stat-card {
             padding: 15px;
             border-radius: 16px;
             text-align: center;
             border-bottom: 4px solid var(--primary);
+            transition: background 0.3s ease;
         }
+        body:not(.light-theme) .stat-card { background: #1e1e1e; }
+        body.light-theme .stat-card { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         
-        .card-label {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        body:not(.light-theme) .stat-label { color: #888; }
+        body.light-theme .stat-label { color: #666; }
         
-        .card-value {
-            display: block;
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
+        .stat-val { display: block; font-size: 1.8rem; font-weight: 900; color: var(--primary); }
+        .best-val { font-size: 0.7rem; color: var(--gold); margin-top: 5px; display: block; }
         
-        /* Визуализация ритма */
-        .beat-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-            padding: 0 10px;
-        }
+        .track-container { width: 85%; height: 6px; border-radius: 3px; position: relative; margin: 10px 0; overflow: hidden; }
+        body:not(.light-theme) .track-container { background: #2a2a2a; }
+        body.light-theme .track-container { background: #ddd; }
         
-        .dot {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--surface-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: var(--text-dim);
-            transition: all 0.08s ease;
-        }
+        #cursor { width: 8px; height: 100%; background: var(--primary); position: absolute; left: 0; border-radius: 3px; transition: left 0.02s linear; }
         
-        .dot.active {
-            background: var(--primary);
-            transform: scale(1.15);
-            box-shadow: 0 0 15px var(--primary);
-            color: white;
-        }
-        
-        /* БАРАБАН */
-        .drum {
-            width: 220px;
-            height: 220px;
+        #drum-pad {
+            width: 240px;
+            height: 240px;
             border-radius: 50%;
             background: radial-gradient(circle at 35% 35%, #4a4a4a, #111);
-            border: 8px solid var(--surface-light);
+            border: 8px solid #2a2a2a;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -389,43 +435,40 @@
             transition: transform 0.04s, border-color 0.1s;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
-        
-        .drum.active {
-            transform: scale(0.94);
-            border-color: var(--primary);
-            box-shadow: 0 0 30px var(--primary);
+        body.light-theme #drum-pad {
+            background: radial-gradient(circle at 35% 35%, #ccc, #999);
+            border: 8px solid #ddd;
         }
+        #drum-pad.active { transform: scale(0.94); border-color: var(--primary); box-shadow: 0 0 30px var(--primary); }
+        #drum-pad b { font-size: 1.5rem; color: white; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         
-        .drum-text {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        .controls { 
+            width: 100%; 
+            max-width: 400px; 
+            padding: 20px 20px 60px;
         }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+        body:not(.light-theme) .control-group label { color: #888; }
+        body.light-theme .control-group label { color: #666; }
         
-        /* Управление */
-        .controls {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; border-radius: 2px; outline: none; }
+        body:not(.light-theme) input[type="range"] { background: #2a2a2a; }
+        body.light-theme input[type="range"] { background: #ddd; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; }
         
         select {
             width: 100%;
-            padding: 14px;
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--surface-light);
-            border-radius: 12px;
-            font-size: 1rem;
+            padding: 12px;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
             cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
         }
+        body:not(.light-theme) select { background: #1e1e1e; color: #e0e0e0; border-color: #2a2a2a; }
+        body.light-theme select { background: #fff; color: #000; border-color: #ddd; }
         
-        button {
+        .btn-main {
             width: 100%;
             padding: 14px;
             background: var(--primary);
@@ -435,21 +478,13 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 25px;
             transition: transform 0.05s, background 0.2s;
         }
+        .btn-main:active { transform: scale(0.97); }
+        .btn-main.stop { background: var(--error); }
         
-        button:active {
-            transform: scale(0.97);
-        }
-        
-        .msg {
-            height: 30px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-align: center;
-            margin: 5px 0;
-        }
-        
+        .msg { height: 30px; font-size: 1rem; font-weight: bold; text-align: center; margin: 10px 0; }
         .perfect { color: var(--gold); text-shadow: 0 0 5px var(--gold); }
         .good { color: #2ecc71; }
         .hit { color: #3498db; }
@@ -458,10 +493,9 @@
 </head>
 <body>
 <div class="screen">
-    <!-- ЛОГОТИП С FAVICON -->
     <div class="logo-bar" id="logo" style="display: none;">
         <div class="logo-icon"></div>
-        <span class="logo-text">Анти ИИ 20 ритмов</span>
+        <span class="logo-text">Анти ИИ 20 ритмов</span> <!-- ← ИЗМЕНЕНО -->
     </div>
 
     <!-- СТРАНИЦА 1: ЗАСТАВКА -->
@@ -476,7 +510,7 @@
     <!-- СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА -->
     <div id="p2" class="page">
         <button class="back-btn" onclick="goToPage('p1')">←</button>
-        <div class="proj-list">
+        <div class="proj-list no-scrollbar">
             <div class="support-block">
                 <h3>🤝 ПОДДЕРЖАТЬ ПРОЕКТ</h3>
                 <div class="free-badge">💙 Приложение бесплатное. Было и останется.</div>
@@ -500,48 +534,153 @@
             <div class="proj-item" onclick="openLink('https://anti-ai-passwords.vercel.app/')">🔐 Анти ИИ Пароли</div>
             <div class="proj-item" onclick="openLink('https://anti-ai-memory.vercel.app/')">🧠 Анти ИИ Память</div>
             <div class="proj-item" onclick="openLink('https://rutube.ru/channel/24404224/')">✨ ВолшебствО</div>
-            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ МЕТРОНОМ</button>
+            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ 20 РИТМОВ</button> <!-- ← ИЗМЕНЕНО -->
         </div>
     </div>
 
-    <!-- СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ -->
+    <!-- СТРАНИЦА 3: 20 РИТМОВ -->
     <div id="p3" class="page">
         <button class="back-btn" onclick="goToPage('p2')">←</button>
-        <div id="app" class="app">
+        <div id="app" class="app no-scrollbar">
             <div class="header">
-                <span id="title">🥁 Анти ИИ Барабан</span>
-                <span id="lang-btn" style="cursor:pointer; background: var(--surface-light); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;">🌐 RU/EN</span>
-            </div>
-
-            <div class="stats">
-                <div class="card">
-                    <div class="card-label" id="lbl-acc">Точность</div>
-                    <span id="accuracy" class="card-value">0%</span>
-                </div>
-                <div class="card">
-                    <div class="card-label" id="lbl-result">Результат</div>
-                    <span id="result-text" class="card-value">---</span>
+                <span class="header-title" id="title">🥁 Анти ИИ Барабан</span>
+                <div style="display: flex; gap: 8px;">
+                    <span id="theme-switch" class="theme-switch">🌓 Тема</span>
+                    <span id="lang-switch" class="lang-switch">🌐 RU/EN</span>
                 </div>
             </div>
-
-            <div id="beat-indicator" class="beat-indicator"></div>
-
-            <div id="drum" class="drum">
-                <span class="drum-text" id="lbl-tap">ТАП</span>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label" id="lbl-acc">Точность</div>
+                    <span id="accuracy" class="stat-val">0%</span>
+                    <span class="best-val">🏆 <span id="best-label">Рекорд:</span> <span id="best-acc">0%</span></span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label" id="lbl-hits">Удары</div>
+                    <span id="hits" class="stat-val">0</span>
+                </div>
             </div>
+            <div class="track-container"><div id="cursor"></div></div>
+            <div id="drum-pad"><b id="lbl-tap">ТАП</b></div>
             <div id="msg" class="msg"></div>
-
             <div class="controls">
-                <select id="rhythm-select"></select>
-                <button id="play-btn">🎵 ПРОИГРАТЬ РИТМ</button>
+                <div class="control-group">
+                    <label>🎵 BPM: <b id="bpm-val">120</b></label>
+                    <input type="range" id="bpm" min="40" max="200" value="120" step="1">
+                </div>
+                <div class="control-group">
+                    <select id="sound-style">
+                        <option value="kick">🥁 Kick Drum</option>
+                        <option value="snare">🎵 Snare</option>
+                        <option value="hihat">🔔 Hi-Hat</option>
+                        <option value="cowbell">🛎️ Cowbell</option>
+                        <option value="wood">🪵 Woodblock</option>
+                        <option value="laser">⚡ Laser</option>
+                    </select>
+                </div>
+                <button id="start-btn" class="btn-main">🎮 СТАРТ</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // ==================== НАВИГАЦИЯ ====================
+    // ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+    let audioCtx = null;
+    let bpm = 120;
+    let isRunning = false;
+    let nextNoteTime = 0;
+    let timerID = null;
+    let lastTickTime = 0;
+    let totalHits = 0;
+    let scoreSum = 0;
+    
+    // ==================== ПЕРЕВОДЫ ====================
+    const translations = {
+        ru: {
+            title: "🥁 Анти ИИ Барабан",
+            accuracy: "Точность",
+            hits: "Удары",
+            best: "Рекорд:",
+            tap: "ТАП",
+            start: "🎮 СТАРТ",
+            stop: "⏹️ СТОП",
+            perfect: "🎯 ИДЕАЛЬНО!",
+            good: "👍 ХОРОШО",
+            hit: "⚡ ПОПАЛ",
+            miss: "😅 МИМО"
+        },
+        en: {
+            title: "🥁 Anti-AI Drum",
+            accuracy: "Accuracy",
+            hits: "Hits",
+            best: "Best:",
+            tap: "TAP",
+            start: "🎮 START",
+            stop: "⏹️ STOP",
+            perfect: "🎯 PERFECT!",
+            good: "👍 GOOD",
+            hit: "⚡ HIT",
+            miss: "😅 MISS"
+        }
+    };
+    
+    let currentLang = 'ru';
+    
+    function stopMetronome() {
+        if (isRunning) {
+            isRunning = false;
+            if (timerID) {
+                clearTimeout(timerID);
+                timerID = null;
+            }
+            const startBtn = document.getElementById('start-btn');
+            if (startBtn) {
+                const t = translations[currentLang];
+                startBtn.innerText = t.start;
+                startBtn.classList.remove('stop');
+            }
+        }
+    }
+    
+    function updateLanguage() {
+        const t = translations[currentLang];
+        document.getElementById('title').innerText = t.title;
+        document.getElementById('lbl-acc').innerText = t.accuracy;
+        document.getElementById('lbl-hits').innerText = t.hits;
+        document.getElementById('best-label').innerText = t.best;
+        document.getElementById('lbl-tap').innerText = t.tap;
+        const startBtn = document.getElementById('start-btn');
+        if (startBtn) {
+            startBtn.innerText = isRunning ? t.stop : t.start;
+        }
+    }
+    
+    function toggleLanguage() {
+        currentLang = currentLang === 'ru' ? 'en' : 'ru';
+        updateLanguage();
+    }
+    
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+        const isLight = document.body.classList.contains('light-theme');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+    
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+        } else {
+            document.body.classList.remove('light-theme');
+        }
+    }
+    
     function goToPage(id) {
+        if (id !== 'p3') {
+            stopMetronome();
+        }
+        
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         const logo = document.getElementById('logo');
@@ -573,7 +712,6 @@
         });
     }
 
-    // ==================== СТРАНИЦА 1: ЗАСТАВКА ====================
     (function initSplash() {
         const photo = document.getElementById('photo');
         const video = document.getElementById('video');
@@ -628,307 +766,160 @@
         updateBtn();
     })();
 
-    // ==================== СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ ====================
+    function initAudio() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+    }
     
-    const rhythms = [
-        { id: 1, name: "Простой 4/4", beats: [1, 2, 3, 4], bpm: 100 },
-        { id: 2, name: "Рок-ритм", beats: [1, 2.5, 3, 4], bpm: 110 },
-        { id: 3, name: "Восьмые", beats: [1, 1.5, 2, 2.5, 3, 3.5, 4], bpm: 90 },
-        { id: 4, name: "Триоль", beats: [1, 1.33, 1.66, 2.5, 2.83, 3.16, 4], bpm: 100 },
-        { id: 5, name: "Пунктирный", beats: [1, 1.75, 2.5, 3.25, 4], bpm: 105 },
-        { id: 6, name: "Синкопа", beats: [1, 2.25, 2.5, 3.75], bpm: 110 },
-        { id: 7, name: "Шаффл", beats: [1, 1.33, 2, 2.33, 3, 3.33, 4], bpm: 95 },
-        { id: 8, name: "Дэнс", beats: [1, 1.5, 2.5, 3, 4], bpm: 120 },
-        { id: 9, name: "Афро", beats: [1, 1.25, 2, 2.75, 3.5, 4], bpm: 105 },
-        { id: 10, name: "Латинский", beats: [1, 1.66, 2.33, 3, 3.66, 4], bpm: 110 },
-        { id: 11, name: "Джазовый", beats: [1, 1.33, 2.66, 3.33, 4], bpm: 115 },
-        { id: 12, name: "Регги", beats: [1, 2.5, 3.5, 4], bpm: 90 },
-        { id: 13, name: "Фанк", beats: [1, 1.75, 2.25, 3.5, 4], bpm: 100 },
-        { id: 14, name: "Хип-хоп", beats: [1, 2, 2.5, 3.5, 4], bpm: 95 },
-        { id: 15, name: "Техно", beats: [1, 1.5, 2, 2.5, 3, 3.5, 4], bpm: 130 },
-        { id: 16, name: "Драм-н-бейс", beats: [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4], bpm: 85 },
-        { id: 17, name: "Вальс 3/4", beats: [1, 2, 3], bpm: 100 },
-        { id: 18, name: "5/4", beats: [1, 2, 3, 4, 5], bpm: 100 },
-        { id: 19, name: "7/8", beats: [1, 1.75, 2.5, 3.25, 4, 5, 6], bpm: 110 },
-        { id: 20, name: "9/8", beats: [1, 1.33, 1.66, 2.5, 3.33, 4.16, 5, 5.66, 6.33, 7.5, 8.33], bpm: 90 }
-    ];
-
-    const i18nNew = {
-        ru: {
-            title: "🥁 Анти ИИ Барабан",
-            acc: "Точность",
-            result: "Результат",
-            tap: "ТАП",
-            play: "🎵 ПРОИГРАТЬ РИТМ",
-            perfect: "🎯 ИДЕАЛЬНО!",
-            hit: "⚡ ПОПАЛ",
-            miss: "😅 МИМО",
-            star: "⭐ ОТЛИЧНО",
-            check: "✔️ ХОРОШО",
-            cross: "❌ МАЛО"
-        },
-        en: {
-            title: "🥁 Anti-AI Drum",
-            acc: "Accuracy",
-            result: "Result",
-            tap: "TAP",
-            play: "🎵 PLAY RHYTHM",
-            perfect: "🎯 PERFECT!",
-            hit: "⚡ HIT",
-            miss: "😅 MISS",
-            star: "⭐ GREAT",
-            check: "✔️ GOOD",
-            cross: "❌ LOW"
-        }
-    };
-
-    let curLangNew = 'ru';
-    let audioCtxNew = null;
-    let isPlayingNew = false;
-    let scheduledTimesNew = [];
-    let userTimesNew = [];
-    let currentRhythmNew = rhythms[0];
-    let playTimeoutNew = null;
-
-    function initAudioNew() {
-        if (!audioCtxNew) {
-            audioCtxNew = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        return audioCtxNew;
-    }
-
-    function playMetroSoundNew(time, isUser = false) {
-        if (!audioCtxNew) return;
-        const osc = audioCtxNew.createOscillator();
-        const gain = audioCtxNew.createGain();
-        osc.frequency.setValueAtTime(isUser ? 150 : 800, time);
-        gain.gain.setValueAtTime(0.15, time);
-        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+    function playSynth(freq, type, decay, vol = 0.7) {
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(vol, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + decay);
         osc.connect(gain);
-        gain.connect(audioCtxNew.destination);
-        osc.start(time);
-        osc.stop(time + 0.1);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(now + decay);
     }
-
-    function renderDotsNew() {
-        const container = document.getElementById('beat-indicator');
-        container.innerHTML = '';
-        currentRhythmNew.beats.forEach((_, idx) => {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            dot.textContent = idx + 1;
-            container.appendChild(dot);
-        });
-    }
-
-    function startRhythmPlaybackNew() {
-        initAudioNew();
-        
-        if (isPlayingNew) {
-            if (playTimeoutNew) clearTimeout(playTimeoutNew);
-            isPlayingNew = false;
-            scheduledTimesNew = [];
-            userTimesNew = [];
+    
+    const sounds = {
+        kick: () => playSynth(150, 'sine', 0.4, 0.8),
+        snare: () => playSynth(250, 'triangle', 0.15, 0.7),
+        hihat: () => playSynth(8000, 'sine', 0.05, 0.2),
+        cowbell: () => playSynth(800, 'square', 0.15, 0.3),
+        wood: () => playSynth(1200, 'sine', 0.05, 0.5),
+        laser: () => { playSynth(1000, 'sine', 0.2, 0.4); setTimeout(() => playSynth(600, 'sine', 0.15, 0.3), 50); }
+    };
+    
+    function scheduler() {
+        if (!isRunning) return;
+        while (nextNoteTime < audioCtx.currentTime + 0.1) {
+            lastTickTime = nextNoteTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.frequency.value = 1000;
+            gain.gain.setValueAtTime(0.08, nextNoteTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, nextNoteTime + 0.04);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(nextNoteTime);
+            osc.stop(nextNoteTime + 0.04);
+            nextNoteTime += 60.0 / bpm;
         }
-
-        if (audioCtxNew.state === 'suspended') {
-            audioCtxNew.resume();
-        }
-
-        isPlayingNew = true;
-        scheduledTimesNew = [];
-        userTimesNew = [];
-        
-        document.getElementById('accuracy').innerText = '0%';
-        document.getElementById('result-text').innerHTML = '---';
-        document.getElementById('msg').innerHTML = '';
-        
-        renderDotsNew();
-
-        const startTime = audioCtxNew.currentTime + 0.5;
-        const beatDuration = 60 / currentRhythmNew.bpm;
-
-        currentRhythmNew.beats.forEach((beatPos, idx) => {
-            const time = startTime + (beatPos - 1) * beatDuration;
-            scheduledTimesNew.push(time);
-            
-            const delay = (time - audioCtxNew.currentTime) * 1000;
-            if (delay > 0) {
-                setTimeout(() => {
-                    if (!isPlayingNew) return;
-                    playMetroSoundNew(audioCtxNew.currentTime, false);
-                    const dots = document.querySelectorAll('.dot');
-                    if (dots[idx]) {
-                        dots[idx].classList.add('active');
-                        setTimeout(() => dots[idx].classList.remove('active'), 150);
-                    }
-                }, delay);
-            }
-        });
-
-        const lastTime = scheduledTimesNew[scheduledTimesNew.length - 1];
-        const finishDelay = (lastTime - audioCtxNew.currentTime + 0.5) * 1000;
-        playTimeoutNew = setTimeout(() => {
-            if (isPlayingNew) {
-                isPlayingNew = false;
-                calculateAccuracyNew();
-            }
-        }, Math.max(0, finishDelay));
+        timerID = setTimeout(scheduler, 25);
     }
-
-    function calculateAccuracyNew() {
-        if (scheduledTimesNew.length === 0 || userTimesNew.length === 0) {
-            document.getElementById('result-text').innerHTML = '❌ НЕТ УДАРОВ';
+    
+    function updateCursor() {
+        if (!isRunning || !audioCtx) { requestAnimationFrame(updateCursor); return; }
+        const now = audioCtx.currentTime;
+        const cycle = 60 / bpm;
+        const elapsed = (now - lastTickTime) % cycle;
+        const progress = Math.min(1, Math.max(0, elapsed / cycle));
+        const cursor = document.getElementById('cursor');
+        if (cursor) cursor.style.left = (progress * 100) + "%";
+        requestAnimationFrame(updateCursor);
+    }
+    
+    function handleTap() {
+        initAudio();
+        const style = document.getElementById('sound-style').value;
+        if (sounds[style]) sounds[style]();
+        if ("vibrate" in navigator) navigator.vibrate(15);
+        const pad = document.getElementById('drum-pad');
+        pad.classList.add('active');
+        setTimeout(() => pad.classList.remove('active'), 60);
+        if (!isRunning) return;
+        
+        const now = audioCtx.currentTime;
+        const diff = Math.abs(now - lastTickTime) * 1000;
+        let points = 0, msgClass = '', msgText = '';
+        const t = translations[currentLang];
+        
+        if (diff < 30) { points = 100; msgClass = 'perfect'; msgText = t.perfect; }
+        else if (diff < 70) { points = 70; msgClass = 'good'; msgText = t.good; }
+        else if (diff < 150) { points = 40; msgClass = 'hit'; msgText = t.hit; }
+        else { points = 0; msgClass = 'miss'; msgText = t.miss; }
+        
+        totalHits++; scoreSum += points;
+        const currentAccuracy = Math.round(scoreSum / totalHits);
+        document.getElementById('hits').innerText = totalHits;
+        document.getElementById('accuracy').innerText = currentAccuracy + "%";
+        const msgDiv = document.getElementById('msg');
+        msgDiv.innerText = msgText;
+        msgDiv.className = 'msg ' + msgClass;
+        const best = localStorage.getItem('drumBest') || 0;
+        if (currentAccuracy > best) {
+            localStorage.setItem('drumBest', currentAccuracy);
+            document.getElementById('best-acc').innerText = currentAccuracy + "%";
+        }
+    }
+    
+    function startTraining() {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume().then(() => actuallyStart());
+        else actuallyStart();
+    }
+    
+    function actuallyStart() {
+        const t = translations[currentLang];
+        if (isRunning) {
+            isRunning = false;
+            if (timerID) {
+                clearTimeout(timerID);
+                timerID = null;
+            }
+            const btn = document.getElementById('start-btn');
+            btn.innerText = t.start;
+            btn.classList.remove('stop');
             return;
         }
-
-        let totalScore = 0;
-        let matchedCount = 0;
-
-        scheduledTimesNew.forEach(target => {
-            let bestDiff = 0.3;
-            for (let ut of userTimesNew) {
-                const diff = Math.abs(ut - target);
-                if (diff < bestDiff) bestDiff = diff;
-            }
-            
-            const diffMs = bestDiff * 1000;
-            if (diffMs < 30) {
-                totalScore += 100;
-                matchedCount++;
-            } else if (diffMs < 70) {
-                totalScore += 70;
-                matchedCount++;
-            } else if (diffMs < 150) {
-                totalScore += 40;
-                matchedCount++;
-            }
-        });
-
-        const accuracy = scheduledTimesNew.length > 0 ? Math.round(totalScore / scheduledTimesNew.length) : 0;
-        document.getElementById('accuracy').innerText = accuracy + '%';
-        
-        let resultHtml = '';
-        if (accuracy >= 80) resultHtml = i18nNew[curLangNew].star;
-        else if (accuracy >= 50) resultHtml = i18nNew[curLangNew].check;
-        else resultHtml = i18nNew[curLangNew].cross;
-        
-        document.getElementById('result-text').innerHTML = resultHtml;
-        
-        const best = localStorage.getItem('drumBest') || 0;
-        if (accuracy > best) {
-            localStorage.setItem('drumBest', accuracy);
-        }
+        isRunning = true;
+        totalHits = 0;
+        scoreSum = 0;
+        document.getElementById('hits').innerText = "0";
+        document.getElementById('accuracy').innerText = "0%";
+        document.getElementById('msg').innerText = "";
+        nextNoteTime = audioCtx.currentTime;
+        lastTickTime = nextNoteTime;
+        scheduler();
+        updateCursor();
+        const btn = document.getElementById('start-btn');
+        btn.innerText = t.stop;
+        btn.classList.add('stop');
     }
-
-    function handleTapNew() {
-        initAudioNew();
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTheme();
         
-        if ("vibrate" in navigator) navigator.vibrate(15);
+        const startBtn = document.getElementById('start-btn');
+        const bpmSlider = document.getElementById('bpm');
+        const drumPad = document.getElementById('drum-pad');
+        const langSwitch = document.getElementById('lang-switch');
+        const themeSwitch = document.getElementById('theme-switch');
         
-        const drum = document.getElementById('drum');
-        drum.classList.add('active');
-        setTimeout(() => drum.classList.remove('active'), 60);
+        if (startBtn) startBtn.onclick = startTraining;
+        if (bpmSlider) bpmSlider.oninput = function() { bpm = parseInt(this.value); document.getElementById('bpm-val').innerText = bpm; };
+        if (drumPad) drumPad.onpointerdown = (e) => { e.preventDefault(); handleTap(); };
+        if (langSwitch) langSwitch.onclick = toggleLanguage;
+        if (themeSwitch) themeSwitch.onclick = toggleTheme;
+        window.onkeydown = (e) => { if (e.code === 'Space') { e.preventDefault(); handleTap(); } };
         
-        if (audioCtxNew && audioCtxNew.state === 'running') {
-            playMetroSoundNew(audioCtxNew.currentTime, true);
-        }
+        const savedBest = localStorage.getItem('drumBest');
+        if (savedBest) document.getElementById('best-acc').innerText = savedBest + "%";
         
-        if (!isPlayingNew) return;
-        
-        const now = audioCtxNew.currentTime;
-        userTimesNew.push(now);
-        
-        let bestDiff = 0.3;
-        for (let t of scheduledTimesNew) {
-            const diff = Math.abs(now - t);
-            if (diff < bestDiff) bestDiff = diff;
-        }
-        
-        const diffMs = bestDiff * 1000;
-        const msgDiv = document.getElementById('msg');
-        
-        if (diffMs < 30) {
-            msgDiv.innerHTML = i18nNew[curLangNew].perfect;
-            msgDiv.className = 'msg perfect';
-        } else if (diffMs < 150) {
-            msgDiv.innerHTML = i18nNew[curLangNew].hit;
-            msgDiv.className = 'msg hit';
-        } else {
-            msgDiv.innerHTML = i18nNew[curLangNew].miss;
-            msgDiv.className = 'msg miss';
-        }
-        
-        setTimeout(() => {
-            if (msgDiv.innerHTML === i18nNew[curLangNew].perfect || 
-                msgDiv.innerHTML === i18nNew[curLangNew].hit || 
-                msgDiv.innerHTML === i18nNew[curLangNew].miss) {
-                msgDiv.innerHTML = '';
-            }
-        }, 800);
-    }
-
-    // Инициализация 3 страницы
-    const selectEl = document.getElementById('rhythm-select');
-    rhythms.forEach(r => {
-        const option = document.createElement('option');
-        option.value = r.id;
-        option.textContent = r.name;
-        selectEl.appendChild(option);
+        updateLanguage();
     });
     
-    selectEl.onchange = (e) => {
-        const id = parseInt(e.target.value);
-        currentRhythmNew = rhythms.find(r => r.id === id);
-        renderDotsNew();
-        if (isPlayingNew) {
-            isPlayingNew = false;
-            if (playTimeoutNew) clearTimeout(playTimeoutNew);
-        }
-    };
-    
-    document.getElementById('play-btn').onclick = () => {
-        startRhythmPlaybackNew();
-    };
-    
-    document.getElementById('drum').onpointerdown = (e) => {
-        e.preventDefault();
-        handleTapNew();
-    };
-    
-    window.onkeydown = (e) => {
-        if (e.code === 'Space') {
-            e.preventDefault();
-            handleTapNew();
-        }
-    };
-    
-    document.getElementById('lang-btn').onclick = () => {
-        curLangNew = curLangNew === 'ru' ? 'en' : 'ru';
-        const t = i18nNew[curLangNew];
-        document.getElementById('title').innerText = t.title;
-        document.getElementById('lbl-acc').innerText = t.acc;
-        document.getElementById('lbl-result').innerText = t.result;
-        document.getElementById('lbl-tap').innerText = t.tap;
-        document.getElementById('play-btn').innerHTML = t.play;
-    };
-    
-    renderDotsNew();
-    
     document.body.addEventListener('touchstart', () => {
-        if (audioCtxNew && audioCtxNew.state === 'suspended') {
-            audioCtxNew.resume();
-        }
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
     }, { once: true });
     
     if ('serviceWorker' in navigator) {
-        const swCode = `const CACHE_NAME = 'drum-v5';
-        self.addEventListener('install', e => {
-            e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href)));
-        });
-        self.addEventListener('fetch', e => {
-            e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
-        });`;
+        const swCode = `const CACHE_NAME = 'drum-v3'; self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
         const blob = new Blob([swCode], { type: 'text/javascript' });
         navigator.serviceWorker.register(URL.createObjectURL(blob));
     }
