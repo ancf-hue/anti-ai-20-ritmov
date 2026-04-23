@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Анти ИИ Метроном</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        /* === БАЗОВЫЕ СТИЛИ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
+
+        .screen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            max-width: 450px;
+            max-height: 800px;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        /* === СТРАНИЦЫ === */
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: #000;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* === ЛОГОТИП С FAVICON === */
+        .logo-bar {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+        .logo-icon {
+            width: 22px;
+            height: 22px;
+            background-image: url('favicon.ico');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        .logo-text { font-weight: 700; font-size: 14px; color: #fff; letter-spacing: 0.5px; }
+
+        /* === КНОПКА НАЗАД === */
+        .back-btn {
+            position: sticky;
+            top: 16px;
+            left: 16px;
+            z-index: 60;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0 0 16px;
+        }
+        .back-btn:active { transform: scale(0.95); }
+
+        /* ========= СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) ========= */
+        .layers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .layers img, .layers video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .sound-btn {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 12px 26px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: white;
+            transition: 0.1s ease;
+            font-family: system-ui;
+        }
+        .sound-btn:active { transform: scale(0.96); }
+        .sound-btn .ico { font-size: 1.9rem; }
+        .sound-btn .txt { font-size: 1.25rem; }
+        @media (max-width: 480px) {
+            .sound-btn { padding: 8px 20px; }
+            .sound-btn .ico { font-size: 1.6rem; }
+            .sound-btn .txt { font-size: 1.1rem; }
+        }
+
+        /* ========= СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА (НЕ ТРОГАТЬ) ========= */
+        .proj-list {
+            padding: 70px 16px 30px;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .support-block {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        .support-block h3 {
+            color: #f1c40f;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .free-badge {
+            text-align: center;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .support-text {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .phone-row {
+            background: #0a0a0a;
+            padding: 14px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 15px 0;
+            border: 1px solid #27ae60;
+        }
+        .phone-row span {
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #27ae60;
+        }
+        .copy-phone-btn {
+            background: #27ae60;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .copy-phone-btn:active { transform: scale(0.95); }
+        .support-note {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .support-thanks {
+            text-align: center;
+            color: #27ae60;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        
+        .other-projects-title {
+            color: #fff;
+            font-size: 1.2rem;
+            margin: 20px 0 15px 0;
+            border-left: 4px solid #27ae60;
+            padding-left: 12px;
+        }
+        
+        .proj-item {
+            padding: 14px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 600;
+            transition: 0.1s;
+        }
+        .proj-item:active {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: #000;
+            transform: scale(0.98);
+        }
+        .btn-metronom {
+            width: 100%;
+            padding: 14px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-metronom:active { transform: scale(0.97); }
+
+        /* ========= СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ ========= */
+        :root {
+            --primary: #27ae60;
+            --primary-dark: #1e8e50;
+            --bg: #121212;
+            --surface: #1e1e1e;
+            --surface-light: #2a2a2a;
+            --text: #e0e0e0;
+            --text-dim: #888;
+            --gold: #f1c40f;
+            --error: #e74c3c;
+        }
+        
+        .app {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--bg);
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .app.visible { opacity: 1; }
+        
+        .header {
+            width: 100%;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            background: var(--surface);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .card {
+            background: var(--surface);
+            flex: 1;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+        
+        .card-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .card-value {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        
+        /* Визуализация ритма */
+        .beat-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        
+        .dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--surface-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--text-dim);
+            transition: all 0.08s ease;
+        }
+        
+        .dot.active {
+            background: var(--primary);
+            transform: scale(1.15);
+            box-shadow: 0 0 15px var(--primary);
+            color: white;
+        }
+        
+        /* БАРАБАН */
+        .drum {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #4a4a4a, #111);
+            border: 8px solid var(--surface-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.04s, border-color 0.1s;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        
+        .drum.active {
+            transform: scale(0.94);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px var(--primary);
+        }
+        
+        .drum-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        
+        /* Управление */
+        .controls {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 14px;
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--surface-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.05s, background 0.2s;
+        }
+        
+        button:active {
+            transform: scale(0.97);
+        }
+        
+        .msg {
+            height: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 5px 0;
+        }
+        
+        .perfect { color: var(--gold); text-shadow: 0 0 5px var(--gold); }
+        .good { color: #2ecc71; }
+        .hit { color: #3498db; }
+        .miss { color: var(--error); }
+        
+        .app::-webkit-scrollbar {
+            width: 3px;
+        }
+        .app::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+        .app::-webkit-scrollbar-thumb {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+<div class="screen">
+    <!-- ЛОГОТИП С FAVICON (название изменено на "Анти ИИ 20 ритмов") -->
+    <div class="logo-bar" id="logo" style="display: none;">
+        <div class="logo-icon"></div>
+        <span class="logo-text">Анти ИИ 20 ритмов</span>
+    </div>
+
+    <!-- СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) -->
+    <div id="p1" class="page active">
+        <div class="layers">
+            <img id="photo" src="frame.jpg" style="z-index:2">
+            <video id="video" src="cube.mp4" muted playsinline preload="auto" style="z-index:1"></video>
+        </div>
+        <button id="soundBtn" class="sound-btn"><span class="ico">🔇</span><span class="txt">Вкл звук</span></button>
+    </div>
+
+    <!-- СТРАНИЦА 2: ПРОЕКТЫ + ПОДДЕРЖКА (НЕ ТРОГАТЬ) -->
+    <div id="p2" class="page">
+        <button class="back-btn" onclick="goToPage('p1')">←</button>
+        <div class="proj-list">
+            <div class="support-block">
+                <h3>🤝 ПОДДЕРЖАТЬ ПРОЕКТ</h3>
+                <div class="free-badge">💙 Приложение бесплатное. Было и останется.</div>
+                <div class="support-text">Если проект помог вам или вашим близким — можете поддержать разработку добровольным переводом.</div>
+                <div class="phone-row">
+                    <span>📱 8-920-227-56-76</span>
+                    <button class="copy-phone-btn" onclick="copyPhoneNumber()">📋 Копировать</button>
+                </div>
+                <div class="support-note">✅ Деньги придут мгновенно. Без комиссии. Безопасно.</div>
+                <div class="support-thanks">❤️ Спасибо за поддержку!</div>
+            </div>
+            <div class="other-projects-title">🌟 ДРУГИЕ НАШИ ПРОЕКТЫ</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-shield.vercel.app/')">🛡️ Анти-ИИ Щит</div>
+            <div class="proj-item" onclick="openLink('https://anti-bullying-app-one.vercel.app/')">🏫 Защита от буллинга</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-animals.vercel.app/')">🐾 Животные поют</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-stress.vercel.app/')">🧘 Анти-ИИ Стресс</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-cosmos.vercel.app/')">✨ Анти ИИ Космос</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-auto.vercel.app/')">🚗 Анти ИИ Автомобиль</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-level.vercel.app/')">📐 Анти ИИ Уровень</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-barcode.vercel.app/')">📱 Анти ИИ Штрих-код</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-passwords.vercel.app/')">🔐 Анти ИИ Пароли</div>
+            <div class="proj-item" onclick="openLink('https://anti-ai-memory.vercel.app/')">🧠 Анти ИИ Память</div>
+            <div class="proj-item" onclick="openLink('https://rutube.ru/channel/24404224/')">✨ ВолшебствО</div>
+            <button class="btn-metronom" onclick="goToPage('p3')">🎵 ОТКРЫТЬ МЕТРОНОМ</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ -->
+    <div id="p3" class="page">
+        <button class="back-btn" onclick="goToPage('p2')">←</button>
+        <div id="app" class="app">
+            <div class="header">
+                <span id="title">🥁 Анти ИИ Барабан</span>
+                <span id="lang-btn" style="cursor:pointer; background: var(--surface-light); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;">🌐 RU/EN</span>
+            </div>
+
+            <div class="stats">
+                <div class="card">
+                    <div class="card-label" id="lbl-acc">Точность</div>
+                    <span id="accuracy" class="card-value">0%</span>
+                </div>
+                <div class="card">
+                    <div class="card-label" id="lbl-result">Результат</div>
+                    <span id="result-text" class="card-value">---</span>
+                </div>
+            </div>
+
+            <div id="beat-indicator" class="beat-indicator"></div>
+
+            <div id="drum" class="drum">
+                <span class="drum-text" id="lbl-tap">ТАП</span>
+            </div>
+            <div id="msg" class="msg"></div>
+
+            <div class="controls">
+                <select id="rhythm-select"></select>
+                <button id="play-btn">🎵 ПРОИГРАТЬ РИТМ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================== НАВИГАЦИЯ ====================
+    function goToPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        const logo = document.getElementById('logo');
+        if (id === 'p1') logo.style.display = 'none';
+        else logo.style.display = 'flex';
+        
+        if (id === 'p3') {
+            setTimeout(() => {
+                const appDiv = document.getElementById('app');
+                if (appDiv) appDiv.classList.add('visible');
+            }, 100);
+        } else {
+            const appDiv = document.getElementById('app');
+            if (appDiv) appDiv.classList.remove('visible');
+        }
+    }
+
+    function openLink(url) {
+        window.open(url, '_blank');
+    }
+
+    function copyPhoneNumber() {
+        const phone = "8-920-227-56-76";
+        navigator.clipboard.writeText(phone).then(() => {
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "✅ Скопировано!";
+            setTimeout(() => btn.innerText = originalText, 1500);
+        });
+    }
+
+    // ==================== СТРАНИЦА 1: ЗАСТАВКА (НЕ ТРОГАТЬ) ====================
+    (function initSplash() {
+        const photo = document.getElementById('photo');
+        const video = document.getElementById('video');
+        const btn = document.getElementById('soundBtn');
+        const ico = btn.querySelector('.ico');
+        const txt = btn.querySelector('.txt');
+        let soundOn = false;
+        let videoStarted = false;
+        
+        video.muted = true;
+        
+        function updateBtn() {
+            if (soundOn) {
+                ico.innerText = '🔊';
+                txt.innerText = 'Звук вкл';
+            } else {
+                ico.innerText = '🔇';
+                txt.innerText = 'Вкл звук';
+            }
+        }
+        
+        btn.onclick = () => {
+            if (soundOn) {
+                video.muted = true;
+                soundOn = false;
+            } else {
+                video.muted = false;
+                soundOn = true;
+                if (videoStarted && video.paused) video.play().catch(e => console.log);
+            }
+            updateBtn();
+        };
+        
+        function switchToVideoAndNext() {
+            if (videoStarted) return;
+            videoStarted = true;
+            video.style.zIndex = '2';
+            photo.style.zIndex = '1';
+            video.play().catch(e => console.log);
+            setTimeout(() => {
+                if (video && !video.ended) video.pause();
+                goToPage('p2');
+            }, 3000);
+        }
+        
+        if (photo.complete && photo.naturalWidth) {
+            setTimeout(switchToVideoAndNext, 2000);
+        } else {
+            photo.onload = () => setTimeout(switchToVideoAndNext, 2000);
+            setTimeout(() => { if (!videoStarted) switchToVideoAndNext(); }, 2500);
+        }
+        updateBtn();
+    })();
+
+    // ==================== СТРАНИЦА 3: НОВЫЙ КОД С 20 РИТМАМИ ====================
+    
+    const rhythms = [
+        { id: 1, name: "Простой 4/4", beats: [1, 2, 3, 4], bpm: 100 },
+        { id: 2, name: "Рок-ритм", beats: [1, 2.5, 3, 4], bpm: 110 },
+        { id: 3, name: "Восьмые", beats: [1, 1.5, 2, 2.5, 3, 3.5, 4], bpm: 90 },
+        { id: 4, name: "Триоль", beats: [1, 1.33, 1.66, 2.5, 2.83, 3.16, 4], bpm: 100 },
+        { id: 5, name: "Пунктирный", beats: [1, 1.75, 2.5, 3.25, 4], bpm: 105 },
+        { id: 6, name: "Синкопа", beats: [1, 2.25, 2.5, 3.75], bpm: 110 },
+        { id: 7, name: "Шаффл", beats: [1, 1.33, 2, 2.33, 3, 3.33, 4], bpm: 95 },
+        { id: 8, name: "Дэнс", beats: [1, 1.5, 2.5, 3, 4], bpm: 120 },
+        { id: 9, name: "Афро", beats: [1, 1.25, 2, 2.75, 3.5, 4], bpm: 105 },
+        { id: 10, name: "Латинский", beats: [1, 1.66, 2.33, 3, 3.66, 4], bpm: 110 },
+        { id: 11, name: "Джазовый", beats: [1, 1.33, 2.66, 3.33, 4], bpm: 115 },
+        { id: 12, name: "Регги", beats: [1, 2.5, 3.5, 4], bpm: 90 },
+        { id: 13, name: "Фанк", beats: [1, 1.75, 2.25, 3.5, 4], bpm: 100 },
+        { id: 14, name: "Хип-хоп", beats: [1, 2, 2.5, 3.5, 4], bpm: 95 },
+        { id: 15, name: "Техно", beats: [1, 1.5, 2, 2.5, 3, 3.5, 4], bpm: 130 },
+        { id: 16, name: "Драм-н-бейс", beats: [1, 1.25, 1.5, 1.75, 2, 2.5, 3, 3.5, 4], bpm: 85 },
+        { id: 17, name: "Вальс 3/4", beats: [1, 2, 3], bpm: 100 },
+        { id: 18, name: "5/4", beats: [1, 2, 3, 4, 5], bpm: 100 },
+        { id: 19, name: "7/8", beats: [1, 1.75, 2.5, 3.25, 4, 5, 6], bpm: 110 },
+        { id: 20, name: "9/8", beats: [1, 1.33, 1.66, 2.5, 3.33, 4.16, 5, 5.66, 6.33, 7.5, 8.33], bpm: 90 }
+    ];
+
+    const i18nNew = {
+        ru: {
+            title: "🥁 Анти ИИ Барабан",
+            acc: "Точность",
+            result: "Результат",
+            tap: "ТАП",
+            play: "🎵 ПРОИГРАТЬ РИТМ",
+            perfect: "🎯 ИДЕАЛЬНО!",
+            hit: "⚡ ПОПАЛ",
+            miss: "😅 МИМО",
+            star: "⭐ ОТЛИЧНО",
+            check: "✔️ ХОРОШО",
+            cross: "❌ МАЛО"
+        },
+        en: {
+            title: "🥁 Anti-AI Drum",
+            acc: "Accuracy",
+            result: "Result",
+            tap: "TAP",
+            play: "🎵 PLAY RHYTHM",
+            perfect: "🎯 PERFECT!",
+            hit: "⚡ HIT",
+            miss: "😅 MISS",
+            star: "⭐ GREAT",
+            check: "✔️ GOOD",
+            cross: "❌ LOW"
+        }
+    };
+
+    let curLangNew = 'ru';
+    let audioCtxNew = null;
+    let isPlayingNew = false;
+    let scheduledTimesNew = [];
+    let userTimesNew = [];
+    let currentRhythmNew = rhythms[0];
+    let playTimeoutNew = null;
+
+    function initAudioNew() {
+        if (!audioCtxNew) {
+            audioCtxNew = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        return audioCtxNew;
+    }
+
+    function playMetroSoundNew(time, isUser = false) {
+        if (!audioCtxNew) return;
+        const osc = audioCtxNew.createOscillator();
+        const gain = audioCtxNew.createGain();
+        osc.frequency.setValueAtTime(isUser ? 150 : 800, time);
+        gain.gain.setValueAtTime(0.15, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+        osc.connect(gain);
+        gain.connect(audioCtxNew.destination);
+        osc.start(time);
+        osc.stop(time + 0.1);
+    }
+
+    function renderDotsNew() {
+        const container = document.getElementById('beat-indicator');
+        container.innerHTML = '';
+        currentRhythmNew.beats.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            dot.textContent = idx + 1;
+            container.appendChild(dot);
+        });
+    }
+
+    function startRhythmPlaybackNew() {
+        initAudioNew();
+        
+        if (isPlayingNew) {
+            if (playTimeoutNew) clearTimeout(playTimeoutNew);
+            isPlayingNew = false;
+            scheduledTimesNew = [];
+            userTimesNew = [];
+        }
+
+        if (audioCtxNew.state === 'suspended') {
+            audioCtxNew.resume();
+        }
+
+        isPlayingNew = true;
+        scheduledTimesNew = [];
+        userTimesNew = [];
+        
+        document.getElementById('accuracy').innerText = '0%';
+        document.getElementById('result-text').innerHTML = '---';
+        document.getElementById('msg').innerHTML = '';
+        
+        renderDotsNew();
+
+        const startTime = audioCtxNew.currentTime + 0.5;
+        const beatDuration = 60 / currentRhythmNew.bpm;
+
+        currentRhythmNew.beats.forEach((beatPos, idx) => {
+            const time = startTime + (beatPos - 1) * beatDuration;
+            scheduledTimesNew.push(time);
+            
+            const delay = (time - audioCtxNew.currentTime) * 1000;
+            if (delay > 0) {
+                setTimeout(() => {
+                    if (!isPlayingNew) return;
+                    playMetroSoundNew(audioCtxNew.currentTime, false);
+                    const dots = document.querySelectorAll('.dot');
+                    if (dots[idx]) {
+                        dots[idx].classList.add('active');
+                        setTimeout(() => dots[idx].classList.remove('active'), 150);
+                    }
+                }, delay);
+            }
+        });
+
+        const lastTime = scheduledTimesNew[scheduledTimesNew.length - 1];
+        const finishDelay = (lastTime - audioCtxNew.currentTime + 0.5) * 1000;
+        playTimeoutNew = setTimeout(() => {
+            if (isPlayingNew) {
+                isPlayingNew = false;
+                calculateAccuracyNew();
+            }
+        }, Math.max(0, finishDelay));
+    }
+
+    function calculateAccuracyNew() {
+        if (scheduledTimesNew.length === 0 || userTimesNew.length === 0) {
+            document.getElementById('result-text').innerHTML = '❌ НЕТ УДАРОВ';
+            return;
+        }
+
+        let totalScore = 0;
+        let matchedCount = 0;
+
+        scheduledTimesNew.forEach(target => {
+            let bestDiff = 0.3;
+            for (let ut of userTimesNew) {
+                const diff = Math.abs(ut - target);
+                if (diff < bestDiff) bestDiff = diff;
+            }
+            
+            const diffMs = bestDiff * 1000;
+            if (diffMs < 30) {
+                totalScore += 100;
+                matchedCount++;
+            } else if (diffMs < 70) {
+                totalScore += 70;
+                matchedCount++;
+            } else if (diffMs < 150) {
+                totalScore += 40;
+                matchedCount++;
+            }
+        });
+
+        const accuracy = scheduledTimesNew.length > 0 ? Math.round(totalScore / scheduledTimesNew.length) : 0;
+        document.getElementById('accuracy').innerText = accuracy + '%';
+        
+        let resultHtml = '';
+        if (accuracy >= 80) resultHtml = i18nNew[curLangNew].star;
+        else if (accuracy >= 50) resultHtml = i18nNew[curLangNew].check;
+        else resultHtml = i18nNew[curLangNew].cross;
+        
+        document.getElementById('result-text').innerHTML = resultHtml;
+        
+        const best = localStorage.getItem('drumBest') || 0;
+        if (accuracy > best) {
+            localStorage.setItem('drumBest', accuracy);
+        }
+    }
+
+    function handleTapNew() {
+        initAudioNew();
+        
+        if ("vibrate" in navigator) navigator.vibrate(15);
+        
+        const drum = document.getElementById('drum');
+        drum.classList.add('active');
+        setTimeout(() => drum.classList.remove('active'), 60);
+        
+        if (audioCtxNew && audioCtxNew.state === 'running') {
+            playMetroSoundNew(audioCtxNew.currentTime, true);
+        }
+        
+        if (!isPlayingNew) return;
+        
+        const now = audioCtxNew.currentTime;
+        userTimesNew.push(now);
+        
+        let bestDiff = 0.3;
+        for (let t of scheduledTimesNew) {
+            const diff = Math.abs(now - t);
+            if (diff < bestDiff) bestDiff = diff;
+        }
+        
+        const diffMs = bestDiff * 1000;
+        const msgDiv = document.getElementById('msg');
+        
+        if (diffMs < 30) {
+            msgDiv.innerHTML = i18nNew[curLangNew].perfect;
+            msgDiv.className = 'msg perfect';
+        } else if (diffMs < 150) {
+            msgDiv.innerHTML = i18nNew[curLangNew].hit;
+            msgDiv.className = 'msg hit';
+        } else {
+            msgDiv.innerHTML = i18nNew[curLangNew].miss;
+            msgDiv.className = 'msg miss';
+        }
+        
+        setTimeout(() => {
+            if (msgDiv.innerHTML === i18nNew[curLangNew].perfect || 
+                msgDiv.innerHTML === i18nNew[curLangNew].hit || 
+                msgDiv.innerHTML === i18nNew[curLangNew].miss) {
+                msgDiv.innerHTML = '';
+            }
+        }, 800);
+    }
+
+    // Инициализация 3 страницы
+    const selectEl = document.getElementById('rhythm-select');
+    rhythms.forEach(r => {
+        const option = document.createElement('option');
+        option.value = r.id;
+        option.textContent = r.name;
+        selectEl.appendChild(option);
+    });
+    
+    selectEl.onchange = (e) => {
+        const id = parseInt(e.target.value);
+        currentRhythmNew = rhythms.find(r => r.id === id);
+        renderDotsNew();
+        if (isPlayingNew) {
+            isPlayingNew = false;
+            if (playTimeoutNew) clearTimeout(playTimeoutNew);
+        }
+    };
+    
+    document.getElementById('play-btn').onclick = () => {
+        startRhythmPlaybackNew();
+    };
+    
+    document.getElementById('drum').onpointerdown = (e) => {
+        e.preventDefault();
+        handleTapNew();
+    };
+    
+    window.onkeydown = (e) => {
+        if (e.code === 'Space') {
+            e.preventDefault();
+            handleTapNew();
+        }
+    };
+    
+    document.getElementById('lang-btn').onclick = () => {
+        curLangNew = curLangNew === 'ru' ? 'en' : 'ru';
+        const t = i18nNew[curLangNew];
+        document.getElementById('title').innerText = t.title;
+        document.getElementById('lbl-acc').innerText = t.acc;
+        document.getElementById('lbl-result').innerText = t.result;
+        document.getElementById('lbl-tap').innerText = t.tap;
+        document.getElementById('play-btn').innerHTML = t.play;
+    };
+    
+    renderDotsNew();
+    
+    document.body.addEventListener('touchstart', () => {
+        if (audioCtxNew && audioCtxNew.state === 'suspended') {
+            audioCtxNew.resume();
+        }
+    }, { once: true });
+    
+    if ('serviceWorker' in navigator) {
+        const swCode = `const CACHE_NAME = 'drum-v5';
+        self.addEventListener('install', e => {
+            e.waitUntil(caches.open(CACHE_NAME).then(c => c.add(location.href)));
+        });
+        self.addEventListener('fetch', e => {
+            e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+        });`;
+        const blob = new Blob([swCode], { type: 'text/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob));
+    }
+</script>
+</body>
