@@ -1,4 +1,7 @@
 <img width="952" height="955" alt="P6IEhjQ" src="https://github.com/user-attachments/assets/843a067a-57be-4a34-a420-2c9e59253b6e" />
+
+ "Бесплатный открытый социальный проект с открытым исходным кодом".
+ 
  🥁 Анти ИИ 20 ритмов
 
 ### Anti-AI Rhythm Trainer | Тренажёр ритма с метрономом
